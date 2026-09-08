@@ -1,0 +1,174 @@
+import React, { useState, useEffect } from 'react';
+import { AppProvider, useApp } from './context/AppContext';
+import { Navbar } from './components/layout/Navbar';
+import { Sidebar } from './components/layout/Sidebar';
+import { Footer } from './components/layout/Footer';
+
+// Pages
+import { LandingPage } from './pages/LandingPage';
+import { DigitalTwinPage } from './pages/DigitalTwinPage';
+import { DidbanDashboard } from './pages/DidbanDashboard';
+import { PasdarDashboard } from './pages/PasdarDashboard';
+import { NazmgarDashboard } from './pages/NazmgarDashboard';
+import { VibrationPage } from './pages/VibrationPage';
+import { WhatIfPage } from './pages/WhatIfPage';
+import { TruthBlockExplorerPage } from './pages/TruthBlockExplorerPage';
+import { HafezePage } from './pages/HafezePage';
+import { ArchitecturePage } from './pages/ArchitecturePage';
+import { ProposalsContractsPage } from './pages/ProposalsContractsPage';
+import { GuidePage } from './pages/GuidePage';
+import { LoginPage } from './pages/LoginPage';
+
+const AppContent: React.FC = () => {
+  const [currentRoute, setCurrentRoute] = useState<string>(window.location.hash || '#/');
+  const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
+  const { setSelectedAssetId, theme, isAuthenticated } = useApp();
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash || '#/';
+      setCurrentRoute(hash);
+
+      // Extract assetId if route contains dynamic segment
+      // e.g. #/vibration/compressor-04 or #/what-if/motor-01
+      const parts = hash.split('/');
+      if (parts.length >= 3 && parts[2]) {
+        setSelectedAssetId(parts[2]);
+      }
+
+      // Close mobile drawer on route change
+      setSidebarOpen(false);
+
+      // Scroll to top on navigation
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    // Initial call
+    handleHashChange();
+
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, [setSelectedAssetId]);
+
+  // Public views that NEVER display the dashboard sidebar
+  const isFullPageView =
+    currentRoute === '#/' ||
+    currentRoute === '' ||
+    currentRoute === '#/landing' ||
+    currentRoute === '#/login';
+
+  // Check if current route is an operational dashboard route requiring authentication
+  const isOperationalDashboardRoute =
+    currentRoute.startsWith('#/didban') ||
+    currentRoute.startsWith('#/twin') ||
+    currentRoute.startsWith('#/pasdar') ||
+    currentRoute.startsWith('#/nazmgar') ||
+    currentRoute.startsWith('#/hafeze') ||
+    currentRoute.startsWith('#/vibration') ||
+    currentRoute.startsWith('#/what-if') ||
+    currentRoute.startsWith('#/truth-block');
+
+  // Route Dispatcher
+  const renderRoute = () => {
+    // If not authenticated and trying to access operational dashboard, guide to Login page
+    if (!isAuthenticated && isOperationalDashboardRoute) {
+      return <LoginPage />;
+    }
+
+    if (currentRoute === '#/' || currentRoute === '' || currentRoute === '#/landing') {
+      return <LandingPage />;
+    }
+    if (currentRoute.startsWith('#/twin')) {
+      return <DigitalTwinPage />;
+    }
+    if (currentRoute.startsWith('#/didban')) {
+      return <DidbanDashboard />;
+    }
+    if (currentRoute.startsWith('#/pasdar')) {
+      return <PasdarDashboard />;
+    }
+    if (currentRoute.startsWith('#/nazmgar')) {
+      return <NazmgarDashboard />;
+    }
+    if (currentRoute.startsWith('#/vibration')) {
+      return <VibrationPage />;
+    }
+    if (currentRoute.startsWith('#/what-if')) {
+      return <WhatIfPage />;
+    }
+    if (currentRoute.startsWith('#/truth-block')) {
+      return <TruthBlockExplorerPage />;
+    }
+    if (currentRoute.startsWith('#/hafeze')) {
+      return <HafezePage />;
+    }
+    if (currentRoute.startsWith('#/architecture')) {
+      return <ArchitecturePage />;
+    }
+    if (currentRoute.startsWith('#/proposals-contracts')) {
+      return <ProposalsContractsPage />;
+    }
+    if (currentRoute.startsWith('#/guide')) {
+      return <GuidePage />;
+    }
+    if (currentRoute.startsWith('#/login')) {
+      return <LoginPage />;
+    }
+
+    return <LandingPage />;
+  };
+
+  // Only show sidebar when the user is logged in AND not on a full-page landing/login view
+  const shouldShowSidebar = isAuthenticated && !isFullPageView;
+
+  return (
+    <div
+      className={`min-h-screen flex flex-col transition-colors selection:bg-sky-600 selection:text-white ${
+        theme === 'dark' ? 'bg-[#070c17] text-slate-100' : 'bg-slate-50 text-slate-900'
+      }`}
+    >
+      {/* Top Sticky Navigation Bar */}
+      <Navbar
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
+        isFullPageView={!shouldShowSidebar}
+      />
+
+      {/* Main Structural Body */}
+      <div className="flex-1 flex w-full relative">
+        {/* Strictly render Sidebar ONLY on dashboard pages when user is authenticated */}
+        {shouldShowSidebar && (
+          <Sidebar
+            currentRoute={currentRoute}
+            sidebarOpen={sidebarOpen}
+            setSidebarOpen={setSidebarOpen}
+          />
+        )}
+
+        {/* Dynamic Page Content Area */}
+        <main
+          className={`flex-1 transition-all ${
+            !shouldShowSidebar
+              ? 'p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-w-0'
+              : 'p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-w-0'
+          }`}
+        >
+          {renderRoute()}
+        </main>
+      </div>
+
+      {/* Global Comprehensive Industrial Footer */}
+      <Footer />
+    </div>
+  );
+};
+
+export function App() {
+  return (
+    <AppProvider>
+      <AppContent />
+    </AppProvider>
+  );
+}
+
+export default App;

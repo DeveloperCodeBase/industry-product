@@ -1,0 +1,8 @@
+{
+  "name": "Vista Industrial Truth Platform",
+  "description": "پلتفرم جامع حقیقت صنعتی، دوقلوی دیجیتال و نگهداری پیش‌بینانه شرکت شبکه هوشمند ابتکار ویستا",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
