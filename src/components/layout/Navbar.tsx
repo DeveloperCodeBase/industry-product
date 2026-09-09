@@ -148,7 +148,7 @@ export const Navbar: React.FC<NavbarProps> = ({ sidebarOpen, setSidebarOpen, isF
   ];
 
   return (
-    <header className="sticky top-0 z-40 h-16 bg-slate-900/95 dark:bg-slate-950/95 light:bg-white/95 backdrop-blur border-b border-slate-800 dark:border-slate-800 light:border-slate-200 text-slate-100 dark:text-slate-100 light:text-slate-900 transition-colors">
+    <header className="fixed top-0 inset-x-0 z-40 h-16 w-full bg-slate-900/95 dark:bg-slate-950/95 light:bg-white/95 backdrop-blur border-b border-slate-800 dark:border-slate-800 light:border-slate-200 text-slate-100 dark:text-slate-100 light:text-slate-900 transition-colors">
       <div className="w-full max-w-[1920px] mx-auto h-full px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2 sm:gap-4">
         
         {/* =========================================

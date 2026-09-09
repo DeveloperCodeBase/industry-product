@@ -31,7 +31,17 @@ interface SearchResultItem {
   tags: string[];
 }
 
-export const CommandPalette: React.FC = () => {
+export interface CommandPaletteProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+  showTrigger?: boolean;
+}
+
+export const CommandPalette: React.FC<CommandPaletteProps> = ({
+  isOpen: controlledIsOpen,
+  onClose: controlledOnClose,
+  showTrigger = true,
+}) => {
   const {
     assets,
     setSelectedAssetId,
@@ -41,7 +51,20 @@ export const CommandPalette: React.FC = () => {
     t
   } = useApp();
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
+
+  const closePalette = () => {
+    if (controlledOnClose) {
+      controlledOnClose();
+    }
+    setInternalIsOpen(false);
+  };
+
+  const openPalette = () => {
+    setInternalIsOpen(true);
+  };
+
   const [query, setQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<'all' | 'asset' | 'dashboard' | 'chapter' | 'document'>('all');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -106,9 +129,13 @@ export const CommandPalette: React.FC = () => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
         e.preventDefault();
-        setIsOpen((prev) => !prev);
+        if (isOpen) {
+          closePalette();
+        } else {
+          openPalette();
+        }
       } else if (e.key === 'Escape' && isOpen) {
-        setIsOpen(false);
+        closePalette();
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -423,7 +450,7 @@ export const CommandPalette: React.FC = () => {
       setSelectedAssetId(item.assetId);
     }
     window.location.hash = item.route;
-    setIsOpen(false);
+    closePalette();
   };
 
   const getCategoryIcon = (category: string) => {
@@ -459,28 +486,30 @@ export const CommandPalette: React.FC = () => {
   return (
     <>
       {/* Search trigger button in Navbar */}
-      <button
-        id="global-command-palette-trigger"
-        onClick={() => setIsOpen(true)}
-        className="flex items-center gap-1.5 sm:gap-2 p-2 sm:px-3 sm:py-1.5 rounded-xl bg-slate-800/80 dark:bg-slate-800/80 light:bg-slate-100 hover:bg-slate-700/90 text-slate-300 dark:text-slate-300 light:text-slate-700 border border-slate-700/60 dark:border-slate-700/60 light:border-slate-200 transition-all text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/50"
-        title="جستجوی سریع (Ctrl+K)"
-        aria-label="جستجوی سریع در پلتفرم"
-      >
-        <Search size={15} className="text-sky-400 shrink-0" />
-        <span className="hidden xl:inline text-slate-400 dark:text-slate-400 light:text-slate-500 max-w-[140px] 2xl:max-w-[200px] truncate">
-          {t('search_placeholder')}
-        </span>
-        <span className="hidden 2xl:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-900/80 dark:bg-slate-900/80 light:bg-white text-[10px] font-mono text-slate-400 dark:text-slate-400 light:text-slate-600 border border-slate-700/70 dark:border-slate-700/70 light:border-slate-300">
-          <kbd className="font-sans">Ctrl</kbd>
-          <span>K</span>
-        </span>
-      </button>
+      {showTrigger && (
+        <button
+          id="global-command-palette-trigger"
+          onClick={openPalette}
+          className="flex items-center gap-1.5 sm:gap-2 p-2 sm:px-3 sm:py-1.5 rounded-xl bg-slate-800/80 dark:bg-slate-800/80 light:bg-slate-100 hover:bg-slate-700/90 text-slate-300 dark:text-slate-300 light:text-slate-700 border border-slate-700/60 dark:border-slate-700/60 light:border-slate-200 transition-all text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/50"
+          title="جستجوی سریع (Ctrl+K)"
+          aria-label="جستجوی سریع در پلتفرم"
+        >
+          <Search size={15} className="text-sky-400 shrink-0" />
+          <span className="hidden xl:inline text-slate-400 dark:text-slate-400 light:text-slate-500 max-w-[140px] 2xl:max-w-[200px] truncate">
+            {t('search_placeholder')}
+          </span>
+          <span className="hidden 2xl:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-900/80 dark:bg-slate-900/80 light:bg-white text-[10px] font-mono text-slate-400 dark:text-slate-400 light:text-slate-600 border border-slate-700/70 dark:border-slate-700/70 light:border-slate-300">
+            <kbd className="font-sans">Ctrl</kbd>
+            <span>K</span>
+          </span>
+        </button>
+      )}
 
       {/* Command Palette Modal */}
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/75 backdrop-blur-md animate-in fade-in duration-150">
           {/* Backdrop click to dismiss */}
-          <div className="fixed inset-0" onClick={() => setIsOpen(false)} />
+          <div className="fixed inset-0" onClick={closePalette} />
 
           {/* Palette Dialog */}
           <div

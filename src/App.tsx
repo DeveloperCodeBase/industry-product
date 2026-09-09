@@ -162,12 +162,15 @@ const AppContent: React.FC = () => {
         theme === 'dark' ? 'bg-[#070c17] text-slate-100' : 'bg-slate-50 text-slate-900'
       }`}
     >
-      {/* Top Sticky Navigation Bar */}
+      {/* Top Fixed Navigation Bar - permanently fixed, never scrolls */}
       <Navbar
         sidebarOpen={sidebarOpen}
         setSidebarOpen={setSidebarOpen}
         isFullPageView={!shouldShowSidebar}
       />
+
+      {/* Fixed Navbar Height Compensator (64px / h-16) */}
+      <div className="h-16 shrink-0 w-full" aria-hidden="true" />
 
       {/* Main Structural Body */}
       <div className="flex-1 flex w-full relative">
