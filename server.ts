@@ -5,7 +5,16 @@ import { GoogleGenAI } from "@google/genai";
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+
+  // Port configuration:
+  // - In Google Cloud Run / AI Studio container, strictly bind to 3000 (required by reverse proxy).
+  // - On local machines, default to 4832 for yarn start / node dist/server.cjs (or override via --port <n> / APP_PORT).
+  const isCloudContainer = Boolean(process.env.APPLET_ID || process.env.K_SERVICE || process.env.DEFAULT_APP_PORT);
+  const portArgIndex = process.argv.indexOf("--port");
+  const cliPort = portArgIndex !== -1 && process.argv[portArgIndex + 1] ? parseInt(process.argv[portArgIndex + 1], 10) : null;
+  const envCustomPort = process.env.APP_PORT ? parseInt(process.env.APP_PORT, 10) : null;
+
+  const PORT = cliPort || envCustomPort || (isCloudContainer ? 3000 : 4832);
 
   app.use(express.json({ limit: "15mb" }));
 

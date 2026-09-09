@@ -171,23 +171,16 @@ const AppContent: React.FC = () => {
 
       {/* Main Structural Body */}
       <div className="flex-1 flex w-full relative">
-        {/* Strictly render Sidebar ONLY on dashboard pages when user is authenticated */}
-        {shouldShowSidebar && (
-          <Sidebar
-            currentRoute={currentRoute}
-            sidebarOpen={sidebarOpen}
-            setSidebarOpen={setSidebarOpen}
-          />
-        )}
+        {/* Unified Responsive Industrial Sidebar */}
+        <Sidebar
+          currentRoute={currentRoute}
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+          isFullPageView={!shouldShowSidebar}
+        />
 
         {/* Dynamic Page Content Area */}
-        <main
-          className={`flex-1 transition-all ${
-            !shouldShowSidebar
-              ? 'p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-w-0'
-              : 'p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto w-full min-w-0'
-          }`}
-        >
+        <main className="flex-1 w-full max-w-[1920px] mx-auto min-w-0 px-3 sm:px-6 lg:px-8 py-4 sm:py-6 overflow-x-hidden">
           {renderRoute()}
         </main>
       </div>

@@ -18,7 +18,7 @@ import { useApp } from '../context/AppContext';
 import { TruthBlock } from '../types';
 
 export const TruthBlockExplorerPage: React.FC = () => {
-  const { truthBlocks } = useApp();
+  const { truthBlocks, t, isRtl } = useApp();
   const [selectedBlock, setSelectedBlock] = useState<TruthBlock | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [verifiedHash, setVerifiedHash] = useState<boolean | null>(null);
@@ -55,26 +55,26 @@ export const TruthBlockExplorerPage: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-5 sm:p-6 rounded-2xl shadow-xl">
         <div>
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400">
               <FileCheck2 size={20} />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">اکسپلورر بلوک حقیقت صنعتی (Truth Block Explorer)</h1>
-              <span className="text-xs text-sky-400 font-mono">واحد بنیادین شواهد تغییرناپذیر فیزیکی • هش رمزنگاری SHA-256</span>
+              <h1 className="text-xl font-bold text-white">{t('truth_page_title')}</h1>
+              <span className="text-xs text-sky-400 font-mono">{t('truth_page_sub')}</span>
             </div>
           </div>
           <p className="text-xs text-slate-400 mt-2 max-w-2xl leading-relaxed">
-            فصل سوم سند معماری: هر تصمیم هوش مصنوعی یا عملیاتی باید به یک بلوک حقیقت با امضای سخت‌افزاری حسگر، خطای همگام‌سازی زمانی PTP و گواهی کالیبراسیون متصل باشد.
+            {t('truth_page_desc')}
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 text-xs">
-            <div className="text-slate-400 font-mono">بلوک‌های ثبت‌شده در حافظه:</div>
-            <div className="text-base font-bold font-mono text-emerald-400 mt-0.5">{truthBlocks.length} بلوک حقیقت</div>
+          <div className="bg-slate-950 px-4 py-2.5 rounded-xl border border-slate-800 text-xs">
+            <div className="text-slate-400 font-mono">{t('truth_blocks')}:</div>
+            <div className="text-base font-bold font-mono text-emerald-400 mt-0.5">{truthBlocks.length}</div>
           </div>
         </div>
       </div>
@@ -86,20 +86,22 @@ export const TruthBlockExplorerPage: React.FC = () => {
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <h2 className="text-sm font-bold text-white flex items-center gap-2">
               <GitCommit size={16} className="text-sky-400" />
-              استریم زنده بلوک‌های حقیقت (Live Ledger)
+              {t('truth_blocks')}
             </h2>
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
           </div>
 
           {/* Search Bar */}
           <div className="relative">
-            <Search size={14} className="absolute right-3 top-2.5 text-slate-400" />
+            <Search size={14} className={`absolute top-2.5 text-slate-400 ${isRtl ? 'right-3' : 'left-3'}`} />
             <input
               type="text"
-              placeholder="جستجو بر اساس شناسه، تجهیز یا هش..."
+              placeholder={t('search_placeholder')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl pr-9 pl-3 py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500"
+              className={`w-full bg-slate-950 border border-slate-800 rounded-xl py-2 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-sky-500 ${
+                isRtl ? 'pr-9 pl-3' : 'pl-9 pr-3'
+              }`}
             />
           </div>
 

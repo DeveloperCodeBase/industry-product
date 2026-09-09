@@ -106,39 +106,41 @@ export const LandingPage: React.FC = () => {
     },
   ];
 
+  const isRtl = language === 'fa' || language === 'ar';
+
   const evidenceSteps = [
     {
-      num: '۰۱',
-      title: 'نمونه‌برداری آنالوگ در لایه صفر پردو (Purdue L0)',
-      desc: 'حسگرهای پیزوالکتریک صنعتی ارتعاش، سنسورهای جابجایی ادی‌کارنت و ترانسمیترهای دما با پهنای باند ۱۰ کیلوهرتز سیگنال پیوسته را به کارت‌های جمع‌آوری لبه منتقل می‌کنند.',
+      num: isRtl ? '۰۱' : '01',
+      title: t('step1_title'),
+      desc: t('step1_desc'),
       tag: 'Purdue Layer 0',
       color: 'border-sky-500 text-sky-400',
     },
     {
-      num: '۰۲',
-      title: 'همگام‌سازی زمان سخت‌افزاری IEEE 1588 PTP',
-      desc: 'تمام پکت‌های تله‌متری به برچسب زمانی نانوثانیه‌ای ساعت مرجع گرندمستر مجهز شده و خطای همزمانی کلاک سخت‌افزاری زیر ۱۰ میلی‌ثانیه تضمین می‌گردد.',
+      num: isRtl ? '۰۲' : '02',
+      title: t('step2_title'),
+      desc: t('step2_desc'),
       tag: 'IEEE 1588 PTP',
       color: 'border-cyan-500 text-cyan-400',
     },
     {
-      num: '۰۳',
-      title: 'بسته‌بندی بلوک حقیقت و هش تغییرناپذیر SHA-256',
-      desc: 'داده‌های فیزیکی همراه با شناسه گواهی کالیبراسیون آزمایشگاه مرجع، در بلوک‌های تغییرناپذیر زنجیره‌ای هش شده و امکان جعل یا لاگ‌سازی صوری در اسکادا از بین می‌رود.',
+      num: isRtl ? '۰۳' : '03',
+      title: t('step3_title'),
+      desc: t('step3_desc'),
       tag: 'SHA-256 Immutable',
       color: 'border-emerald-500 text-emerald-400',
     },
     {
-      num: '۰۴',
-      title: 'رندرینگ دوقلوی سه‌بعدی و منطبق با ISO 10816-3',
-      desc: 'تله‌متری رمزنگاری‌شده مستقیماً به گره‌های هندسی دوقلوی سه‌بعدی Three.js متصل شده و رنگ و رفتار المان‌ها بر اساس نواحی مجاز استاندارد جهانی تغییر می‌کند.',
+      num: isRtl ? '۰۴' : '04',
+      title: t('step4_title'),
+      desc: t('step4_desc'),
       tag: 'Three.js & ISO 10816',
       color: 'border-purple-500 text-purple-400',
     },
     {
-      num: '۰۵',
-      title: 'صدور خودکار دستور کار CMMS و قفل ایمنی فیزیکی',
-      desc: 'در صورت خروج فرکانس‌های نقص بیرینگ (BPFO/BPFI) از حد مجاز، دستور کار تعمیراتی با تعیین متریال دقیق در سیستم ERP صادر شده و در آستانه خطر فرمان تریپ صادر می‌گردد.',
+      num: isRtl ? '۰۵' : '05',
+      title: t('step5_title'),
+      desc: t('step5_desc'),
       tag: 'Autonomous CMMS',
       color: 'border-rose-500 text-rose-400',
     },
@@ -147,9 +149,9 @@ export const LandingPage: React.FC = () => {
   const primaryTargetUrl = isAuthenticated ? '#/didban' : '#/login';
 
   return (
-    <div className="space-y-16 pb-16 max-w-7xl mx-auto">
+    <div className="space-y-12 sm:space-y-16 pb-16 w-full max-w-[1920px] mx-auto min-w-0">
       {/* Top Scientific Master Hero Section */}
-      <section className="relative overflow-hidden rounded-3xl bg-white dark:bg-gradient-to-b dark:from-[#060c18] dark:via-[#091122] dark:to-[#040810] border border-slate-200 dark:border-slate-800 p-6 sm:p-10 lg:p-14 shadow-2xl transition-colors">
+      <section className="relative overflow-hidden rounded-3xl bg-white dark:bg-gradient-to-b dark:from-[#060c18] dark:via-[#091122] dark:to-[#040810] border border-slate-200 dark:border-slate-800 p-5 sm:p-8 lg:p-12 shadow-2xl transition-colors">
         {/* Subtle Ambient Mathematical Glow */}
         <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-0 left-1/4 w-[500px] h-[500px] bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -161,154 +163,158 @@ export const LandingPage: React.FC = () => {
               <Award size={15} />
               <span>{t('hero_badge')}</span>
             </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-mono font-bold">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-mono font-bold">
               <ShieldCheck size={14} />
-              <span>ISO 10816-3 • API 670 • IEC 62443 Certified</span>
+              <span>{t('hero_standards')}</span>
             </div>
           </div>
 
           {/* Master Headline */}
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
-            نخستین پلتفرم حقیقت صنعتی، <br />
+          <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
+            {t('hero_title_1')} <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-600 via-cyan-500 to-teal-500 dark:from-sky-400 dark:via-cyan-300 dark:to-teal-300">
-              دوقلوی دیجیتال سه‌بعدی و نگهداری پیش‌بینانه بومی
+              {t('hero_title_2')}
             </span>
           </h1>
 
           {/* Deep Scientific Project Description */}
-          <p className="text-sm sm:text-base lg:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl text-justify">
-            پلتفرم «ویستا» یک سامانه مهندسی پیشرفته برای پایش بلادرنگ و قابلیت اطمینان تجهیزات حساس صنایع نفت، گاز، پتروشیمی، نیروگاهی، سیمان و فولاد است. این سامانه با ترکیب <strong>فیزیک دینامیک ارتعاشات ماشین‌آلات دوار (ISO 10816-3)</strong>، <strong>برچسب زمانی فوق‌دقیق سخت‌افزاری (IEEE 1588 PTP)</strong> و <strong>بلوک‌های حقیقت تغییرناپذیر رمزنگاری‌شده با هش SHA-256</strong>، داده‌های فیزیکی را از سنسورهای لایه صفر پردو تا داشبوردهای تصمیم‌گیری کلان به اثبات می‌رساند؛ کاملاً مستقل از ابرهای خارجی و با قابلیت استقرار ۱۰۰٪ ایزوله (Air-Gapped On-Premises).
+          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl text-justify">
+            {t('hero_desc')}
           </p>
 
           {/* Primary Action Controls */}
-          <div className="flex flex-wrap items-center gap-3.5 pt-3">
+          <div className="flex flex-wrap items-center gap-3 pt-2">
             <a
               href={primaryTargetUrl}
-              className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-sky-600 to-cyan-600 hover:from-sky-500 hover:to-cyan-500 text-white font-extrabold text-sm shadow-xl shadow-sky-600/30 transition-all flex items-center gap-2 group"
+              className="px-5 sm:px-6 py-3 rounded-xl bg-gradient-to-r from-sky-600 to-cyan-600 hover:from-sky-500 hover:to-cyan-500 text-white font-extrabold text-xs sm:text-sm shadow-xl shadow-sky-600/30 transition-all flex items-center gap-2 group whitespace-nowrap"
             >
               <Lock size={16} />
               <span>{isAuthenticated ? t('nav_dashboard') : t('hero_cta_login')}</span>
-              <ChevronLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+              {isRtl ? (
+                <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+              ) : (
+                <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+              )}
             </a>
 
             <a
               href={isAuthenticated ? '#/twin' : '#/login'}
-              className="px-5 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/90 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 font-bold text-sm border border-slate-300 dark:border-slate-700 transition-all flex items-center gap-2 shadow-sm"
+              className="px-4 sm:px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/90 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 font-bold text-xs sm:text-sm border border-slate-300 dark:border-slate-700 transition-all flex items-center gap-2 shadow-sm whitespace-nowrap"
             >
-              <Boxes size={18} className="text-sky-500" />
+              <Boxes size={16} className="text-sky-500" />
               <span>{t('hero_cta_twin')}</span>
             </a>
 
             <a
               href="#/maintenance"
-              className="px-5 py-3.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/90 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 font-bold text-sm border border-slate-300 dark:border-slate-700 transition-all flex items-center gap-2 shadow-sm"
+              className="px-4 sm:px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800/90 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 font-bold text-xs sm:text-sm border border-slate-300 dark:border-slate-700 transition-all flex items-center gap-2 shadow-sm whitespace-nowrap"
             >
-              <Wrench size={17} className="text-amber-500" />
-              <span>لاگ نگهداری و تخریب قطعات</span>
+              <Wrench size={16} className="text-amber-500" />
+              <span>{t('hero_cta_maintenance')}</span>
             </a>
 
             <button
               onClick={() => setScannerOpen(true)}
-              className="px-5 py-3.5 rounded-xl bg-purple-600/15 hover:bg-purple-600/25 text-purple-700 dark:text-purple-300 font-bold text-sm border border-purple-500/40 transition-all flex items-center gap-2 shadow-sm"
+              className="px-4 sm:px-5 py-3 rounded-xl bg-purple-600/15 hover:bg-purple-600/25 text-purple-700 dark:text-purple-300 font-bold text-xs sm:text-sm border border-purple-500/40 transition-all flex items-center gap-2 shadow-sm whitespace-nowrap"
             >
-              <QrCode size={18} className="text-purple-500" />
-              <span>اسکنر QR کد فیزیکی تجهیز</span>
+              <QrCode size={16} className="text-purple-500" />
+              <span>{t('hero_cta_qr')}</span>
             </button>
           </div>
 
           {/* Scientific Metrics Proof Strip */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-slate-200 dark:border-slate-800/80">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-6 border-t border-slate-200 dark:border-slate-800/80">
             <div className="bg-slate-50 dark:bg-slate-950/60 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800/80">
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">قابلیت ردیابی شواهد داده</div>
-              <div className="text-2xl font-black font-mono text-emerald-600 dark:text-emerald-400 mt-1">۹۹.۹۸٪</div>
-              <div className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">SHA-256 Merkle & PTP Clock</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium truncate">{t('stat_traceability')}</div>
+              <div className="text-xl sm:text-2xl font-black font-mono text-emerald-600 dark:text-emerald-400 mt-1">۹۹.۹۸٪</div>
+              <div className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 truncate">{t('stat_traceability_sub')}</div>
             </div>
 
             <div className="bg-slate-50 dark:bg-slate-950/60 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800/80">
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">دقت همزمانی زمانی</div>
-              <div className="text-2xl font-black font-mono text-sky-600 dark:text-sky-400 mt-1">±۴.۲ µs</div>
-              <div className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">IEEE 1588 Precision Hardware</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium truncate">{t('stat_sync_precision')}</div>
+              <div className="text-xl sm:text-2xl font-black font-mono text-sky-600 dark:text-sky-400 mt-1">±۴.۲ µs</div>
+              <div className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 truncate">{t('stat_sync_sub')}</div>
             </div>
 
             <div className="bg-slate-50 dark:bg-slate-950/60 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800/80">
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">سطوح بلوغ دوقلوی ۳D</div>
-              <div className="text-2xl font-black font-mono text-purple-600 dark:text-purple-400 mt-1">Level 1 - 4</div>
-              <div className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">CAD Geometry to Autonomous PdM</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium truncate">{t('stat_twin_levels')}</div>
+              <div className="text-xl sm:text-2xl font-black font-mono text-purple-600 dark:text-purple-400 mt-1">Level 1 - 4</div>
+              <div className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 truncate">{t('stat_twin_sub')}</div>
             </div>
 
             <div className="bg-slate-50 dark:bg-slate-950/60 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800/80">
-              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">استقلال فناورانه و ایزولاسیون</div>
-              <div className="text-2xl font-black font-mono text-emerald-600 dark:text-emerald-400 mt-1">۱۰۰٪</div>
-              <div className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5">Sovereign On-Premise Airgap</div>
+              <div className="text-xs text-slate-500 dark:text-slate-400 font-medium truncate">{t('stat_independence')}</div>
+              <div className="text-xl sm:text-2xl font-black font-mono text-emerald-600 dark:text-emerald-400 mt-1">۱۰۰٪</div>
+              <div className="text-[11px] text-slate-400 dark:text-slate-500 mt-0.5 truncate">{t('stat_independence_sub')}</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Interactive Scientific Deep Dive Section */}
-      <section className="p-6 sm:p-10 rounded-3xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 space-y-6 shadow-xl transition-colors">
+      <section className="p-5 sm:p-8 lg:p-10 rounded-3xl bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 space-y-6 shadow-xl transition-colors">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-slate-200 dark:border-slate-800">
           <div>
             <div className="inline-flex items-center gap-2 text-xs font-bold text-sky-600 dark:text-sky-400 mb-1">
               <BookOpen size={16} />
-              <span>مبانی علمی، فیزیک ارتعاشات و معماری سیستم</span>
+              <span>{t('tab_vibration_iso')}</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-              تشریح جامع و علمی متدولوژی پلتفرم صنعتی ویستا
+            <h2 className="text-lg sm:text-2xl font-black text-slate-900 dark:text-white">
+              {t('iso_calc_title')}
             </h2>
           </div>
 
           {/* Scientific Navigation Tabs */}
-          <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs">
+          <div className="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-xs overflow-x-auto max-w-full">
             <button
               onClick={() => setActiveTab('science_vibration')}
-              className={`px-3 py-2 rounded-xl font-bold transition-all ${
+              className={`px-3 py-2 rounded-xl font-bold transition-all whitespace-nowrap ${
                 activeTab === 'science_vibration'
                   ? 'bg-sky-600 text-white shadow-md'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              فیزیک ارتعاشات و ISO 10816-3
+              {t('tab_vibration_iso')}
             </button>
             <button
               onClick={() => setActiveTab('truth_chain')}
-              className={`px-3 py-2 rounded-xl font-bold transition-all ${
+              className={`px-3 py-2 rounded-xl font-bold transition-all whitespace-nowrap ${
                 activeTab === 'truth_chain'
                   ? 'bg-sky-600 text-white shadow-md'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              زنجیره بلوک حقیقت (SHA-256)
+              {t('tab_truth_chain')}
             </button>
             <button
               onClick={() => setActiveTab('triad')}
-              className={`px-3 py-2 rounded-xl font-bold transition-all ${
+              className={`px-3 py-2 rounded-xl font-bold transition-all whitespace-nowrap ${
                 activeTab === 'triad'
                   ? 'bg-sky-600 text-white shadow-md'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              تثلیث دیدبان - پاسدار - نظم‌گر
+              {t('tab_triad')}
             </button>
             <button
               onClick={() => setActiveTab('twin_levels')}
-              className={`px-3 py-2 rounded-xl font-bold transition-all ${
+              className={`px-3 py-2 rounded-xl font-bold transition-all whitespace-nowrap ${
                 activeTab === 'twin_levels'
                   ? 'bg-sky-600 text-white shadow-md'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              دوقلوی دیجیتال ۴ سطحی
+              {t('tab_twin_maturity')}
             </button>
             <button
               onClick={() => setActiveTab('benchmark')}
-              className={`px-3 py-2 rounded-xl font-bold transition-all ${
+              className={`px-3 py-2 rounded-xl font-bold transition-all whitespace-nowrap ${
                 activeTab === 'benchmark'
                   ? 'bg-sky-600 text-white shadow-md'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
               }`}
             >
-              مقایسه با غول‌های فناوری
+              {t('tab_benchmark')}
             </button>
           </div>
         </div>
@@ -319,47 +325,47 @@ export const LandingPage: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2 space-y-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-justify">
                 <p>
-                  در ماشین‌آلات دوار صنعتی (توربوکمپرسورها، پمپ‌های فرآیندی سانتریفیوژ و الکتروموتورهای سنگین)، ارتعاشات مکانیکی اصلی‌ترین شناسه سلامت ساختاری تجهیز هستند. استاندارد بین‌المللی <strong>ISO 10816-3 (و نسخه مدرن ISO 20816)</strong> دامنه سرعت ارتعاشات مؤثر (Velocity RMS بر حسب mm/s) را در بازه فرکانسی ۱۰ الی ۱۰۰۰ هرتز به ۴ ناحیه عملیاتی تفکیک می‌کند:
+                  {t('iso_calc_sub')}
                 </p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                   <div className="p-3.5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-500/30">
                     <div className="flex items-center gap-2 font-bold text-emerald-700 dark:text-emerald-400">
                       <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
-                      <span>ناحیه A (Good / New Condition):</span>
+                      <span>{t('iso_zone_a')}:</span>
                     </div>
                     <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                      ارتعاش تجهیزات تازه نصب‌شده و راه‌اندازی‌شده؛ بدون محدودیت کارکرد پیوسته (کمتر از ۲.۳ mm/s).
+                      {t('iso_zone_a_desc')}
                     </p>
                   </div>
 
                   <div className="p-3.5 rounded-2xl bg-sky-50 dark:bg-sky-950/30 border border-sky-500/30">
                     <div className="flex items-center gap-2 font-bold text-sky-700 dark:text-sky-400">
                       <span className="w-2.5 h-2.5 rounded-full bg-sky-500" />
-                      <span>ناحیه B (Acceptable / Unrestricted):</span>
+                      <span>{t('iso_zone_b')}:</span>
                     </div>
                     <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                      کارکرد عادی و پیوسته صنعتی با ضریب ایمنی کامل بدون نیاز به مداخله فوری (۲.۳ الی ۴.۵ mm/s).
+                      {t('iso_zone_b_desc')}
                     </p>
                   </div>
 
                   <div className="p-3.5 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-500/30">
                     <div className="flex items-center gap-2 font-bold text-amber-700 dark:text-amber-400">
                       <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
-                      <span>ناحیه C (Restricted / Alert Zone):</span>
+                      <span>{t('iso_zone_c')}:</span>
                     </div>
                     <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                      ناحیه هشدار؛ کارکرد فقط به مدت محدود مجاز است و باید برنامه تعمیراتی تنظیم گردد (۴.۵ الی ۷.۱ mm/s).
+                      {t('iso_zone_c_desc')}
                     </p>
                   </div>
 
                   <div className="p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-500/30">
                     <div className="flex items-center gap-2 font-bold text-rose-700 dark:text-rose-400">
                       <span className="w-2.5 h-2.5 rounded-full bg-rose-500" />
-                      <span>ناحیه D (Danger / Immediate Trip):</span>
+                      <span>{t('iso_zone_d')}:</span>
                     </div>
                     <p className="text-xs text-slate-600 dark:text-slate-300 mt-1">
-                      ناحیه خطرناک تخریب سازه و یاتاقان؛ فرمان تریپ حفاظتی توسط سیستم «پاسدار» صادر می‌شود (بیش از ۷.۱ mm/s).
+                      {t('iso_zone_d_desc')}
                     </p>
                   </div>
                 </div>
@@ -367,27 +373,27 @@ export const LandingPage: React.FC = () => {
                 <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-2">
                   <h4 className="font-bold text-slate-900 dark:text-white text-xs flex items-center gap-2">
                     <Waves size={15} className="text-sky-500" />
-                    <span>دمدولاسیون اینولپ (Envelope Demodulation) برای تشخیص عیوب زودهنگام بیرینگ:</span>
+                    <span>{t('didban_spectral_harmonics')}</span>
                   </h4>
                   <p className="text-xs text-slate-600 dark:text-slate-400">
-                    ضربه اولیه ناشی از پوسته شدن ساچمه روی رینگ بیرینگ، نوسانات فرکانس بالایی (۵ الی ۲۰ کیلوهرتز) ایجاد می‌کند. پلتفرم ویستا با استخراج پوش سیگنال (Hilbert Transform)، فرکانس‌های مشخصه عیب را محاسبه می‌کند:
+                    {t('spectral_desc')}
                   </p>
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-[11px] font-mono text-center pt-1">
                     <div className="p-2 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800">
                       <div className="font-bold text-sky-600 dark:text-sky-400">BPFO</div>
-                      <div className="text-slate-500">رینگ خارجی</div>
+                      <div className="text-slate-500">{t('bpfo_label')}</div>
                     </div>
                     <div className="p-2 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800">
                       <div className="font-bold text-cyan-600 dark:text-cyan-400">BPFI</div>
-                      <div className="text-slate-500">رینگ داخلی</div>
+                      <div className="text-slate-500">{t('bpfi_label')}</div>
                     </div>
                     <div className="p-2 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800">
                       <div className="font-bold text-purple-600 dark:text-purple-400">BSF</div>
-                      <div className="text-slate-500">گردش ساچمه</div>
+                      <div className="text-slate-500">{t('bsf_label')}</div>
                     </div>
                     <div className="p-2 rounded-xl bg-slate-200 dark:bg-slate-900 border border-slate-300 dark:border-slate-800">
                       <div className="font-bold text-emerald-600 dark:text-emerald-400">FTF</div>
-                      <div className="text-slate-500">قفسه نگهدارنده</div>
+                      <div className="text-slate-500">{t('ftf_label')}</div>
                     </div>
                   </div>
                 </div>
@@ -399,12 +405,12 @@ export const LandingPage: React.FC = () => {
                   <div className="flex items-center gap-2">
                     <Gauge size={20} className="text-sky-500" />
                     <h3 className="text-sm font-bold text-slate-900 dark:text-white">
-                      ماتریس ارزیابی برخط کلاس ماشین
+                      {t('iso_calc_title')}
                     </h3>
                   </div>
 
                   <div className="space-y-2 text-xs">
-                    <label className="block text-slate-600 dark:text-slate-400">توان نامی الکتروموتور / محرک:</label>
+                    <label className="block text-slate-600 dark:text-slate-400">{t('iso_power_kw')}:</label>
                     <div className="grid grid-cols-2 gap-2 font-mono">
                       <button
                         onClick={() => setSelectedIsoPowerKw(150)}
@@ -414,7 +420,7 @@ export const LandingPage: React.FC = () => {
                             : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-800'
                         }`}
                       >
-                        کلاس II (۱۵-۳۰۰ kW)
+                        15 - 300 kW
                       </button>
                       <button
                         onClick={() => setSelectedIsoPowerKw(350)}
@@ -424,13 +430,13 @@ export const LandingPage: React.FC = () => {
                             : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-800'
                         }`}
                       >
-                        کلاس III (&gt; ۳۰۰ kW)
+                        &gt; 300 kW
                       </button>
                     </div>
                   </div>
 
                   <div className="space-y-2 text-xs">
-                    <label className="block text-slate-600 dark:text-slate-400">نوع فونداسیون سازه (Foundation):</label>
+                    <label className="block text-slate-600 dark:text-slate-400">{t('iso_foundation')}:</label>
                     <div className="grid grid-cols-2 gap-2 font-mono">
                       <button
                         onClick={() => setSelectedIsoFoundation('rigid')}
@@ -440,7 +446,7 @@ export const LandingPage: React.FC = () => {
                             : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-800'
                         }`}
                       >
-                        صلب (Rigid)
+                        {t('iso_rigid')}
                       </button>
                       <button
                         onClick={() => setSelectedIsoFoundation('flexible')}
@@ -450,26 +456,26 @@ export const LandingPage: React.FC = () => {
                             : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-300 dark:border-slate-800'
                         }`}
                       >
-                        انعطاف‌پذیر (Flexible)
+                        {t('iso_flexible')}
                       </button>
                     </div>
                   </div>
 
                   <div className="p-3 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1.5 text-xs font-mono">
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Zone A Limit:</span>
+                      <span className="text-slate-500">Zone A:</span>
                       <span className="text-emerald-500 font-bold">&lt; 2.3 mm/s</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Zone B Limit:</span>
+                      <span className="text-slate-500">Zone B:</span>
                       <span className="text-sky-500 font-bold">2.3 - 4.5 mm/s</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Zone C Alert:</span>
+                      <span className="text-slate-500">Zone C:</span>
                       <span className="text-amber-500 font-bold">4.5 - 7.1 mm/s</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-slate-500">Zone D Trip:</span>
+                      <span className="text-slate-500">Zone D:</span>
                       <span className="text-rose-500 font-bold">&gt; 7.1 mm/s</span>
                     </div>
                   </div>
@@ -480,7 +486,7 @@ export const LandingPage: React.FC = () => {
                   className="w-full py-2.5 rounded-xl bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-sky-400 font-bold text-xs flex items-center justify-center gap-1.5 transition-colors border border-slate-700"
                 >
                   <Waves size={15} />
-                  <span>ورود به ماژول تخصصی آنالیز ارتعاشات</span>
+                  <span>{t('tab_vibration_iso')}</span>
                 </a>
               </div>
             </div>
@@ -492,11 +498,11 @@ export const LandingPage: React.FC = () => {
           <div className="space-y-6 animate-in fade-in-50 duration-300">
             <div className="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed text-justify">
               <p>
-                بزرگترین چالش ممیزی در کارخانجات ایران و خاورمیانه، «شکاف اعتماد داده» است: ارقام متناقض بین گزارش‌های دستی تکنسین‌ها، لاگ‌های تغییرپذیر در اسکاداهای متمرکز، و گواهی‌های منقضی‌شده کالیبراسیون حسگرها. پلتفرم ویستا این معضل را با معماری <strong>بلوک حقیقت (Truth Block)</strong> برطرف کرده است:
+                {t('truth_chain_desc')}
               </p>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
               {evidenceSteps.map((step, idx) => (
                 <div
                   key={idx}
@@ -514,7 +520,7 @@ export const LandingPage: React.FC = () => {
                   </div>
 
                   <div className="pt-2 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] text-sky-600 dark:text-sky-400 font-bold">
-                    <span>زنجیره امضای رمزنگاری</span>
+                    <span>{t('truth_blocks')}</span>
                     <Fingerprint size={14} className="text-emerald-500" />
                   </div>
                 </div>
@@ -525,14 +531,14 @@ export const LandingPage: React.FC = () => {
               <div className="flex items-center gap-3">
                 <ShieldCheck size={20} className="text-emerald-500 shrink-0" />
                 <span className="text-slate-700 dark:text-slate-300">
-                  تمامی بلوک‌های حقیقت دارای چک‌سام کالیبراسیون و برچسب زمانی برخط هستند که در ماژول ممیزی مستقل قابل راستی‌آزمایی است.
+                  {t('truth_chain_desc')}
                 </span>
               </div>
               <a
                 href="#/truth-block"
                 className="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold whitespace-nowrap transition-colors"
               >
-                کاوش در زنجیره بلوک‌های حقیقت
+                {t('nav_truth_block')}
               </a>
             </div>
           </div>
@@ -549,19 +555,19 @@ export const LandingPage: React.FC = () => {
                     <Eye size={24} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white">ویستا-دیدبان (Didban)</h3>
-                    <div className="text-xs text-teal-600 dark:text-teal-400 font-bold font-mono mt-0.5">Observability & Truth Layer</div>
+                    <h3 className="text-lg font-black text-slate-900 dark:text-white">{t('didban_title')}</h3>
+                    <div className="text-xs text-teal-600 dark:text-teal-400 font-bold font-mono mt-0.5">{t('didban_role')}</div>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed text-justify">
-                    دیدبان وظیفه دریافت سیگنال‌های لایه صفر و یک، محاسبه شاخص‌های آماری FFT، کرتوزیس و کرست فاکتور، راستی‌آزمایی اعتبار کالیبراسیون سنسورها و تشکیل بلوک حقیقت را بر عهده دارد.
+                    {t('didban_desc')}
                   </p>
                 </div>
                 <a
                   href="#/didban"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-600 dark:text-teal-400 hover:underline pt-2 border-t border-slate-200 dark:border-slate-800"
                 >
-                  <span>ورود به دیده‌بانی برخط</span>
-                  <ChevronLeft size={14} />
+                  <span>{t('nav_didban')}</span>
+                  {isRtl ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
                 </a>
               </div>
 
@@ -572,19 +578,19 @@ export const LandingPage: React.FC = () => {
                     <ShieldAlert size={24} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white">ویستا-پاسدار (Pasdar)</h3>
-                    <div className="text-xs text-rose-600 dark:text-rose-400 font-bold font-mono mt-0.5">Autonomous Safety Interlock</div>
+                    <h3 className="text-lg font-black text-slate-900 dark:text-white">{t('pasdar_title')}</h3>
+                    <div className="text-xs text-rose-600 dark:text-rose-400 font-bold font-mono mt-0.5">{t('pasdar_role')}</div>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed text-justify">
-                    پاسدار مسئول انطباق با اینواریانت‌های فیزیکی، مانیتورینگ آستانه‌های استاندارد IEC 61508 SIL-3 و ایجاد اینترلاک‌های خودکار سایبرفیزیکی در خطوط حساس جهت جلوگیری از انفجار یا تخریب پروانه‌هاست.
+                    {t('pasdar_desc')}
                   </p>
                 </div>
                 <a
                   href="#/pasdar"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-rose-600 dark:text-rose-400 hover:underline pt-2 border-t border-slate-200 dark:border-slate-800"
                 >
-                  <span>ورود به مرکز اینترلاک حفاظتی</span>
-                  <ChevronLeft size={14} />
+                  <span>{t('nav_pasdar')}</span>
+                  {isRtl ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
                 </a>
               </div>
 
@@ -595,19 +601,19 @@ export const LandingPage: React.FC = () => {
                     <Scale size={24} />
                   </div>
                   <div>
-                    <h3 className="text-lg font-black text-slate-900 dark:text-white">ویستا-نظم‌گر (Nazmgar)</h3>
-                    <div className="text-xs text-sky-600 dark:text-sky-400 font-bold font-mono mt-0.5">Optimization & Closed-Loop CMMS</div>
+                    <h3 className="text-lg font-black text-slate-900 dark:text-white">{t('nazmgar_title')}</h3>
+                    <div className="text-xs text-sky-600 dark:text-sky-400 font-bold font-mono mt-0.5">{t('nazmgar_role')}</div>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed text-justify">
-                    نظم‌گر با همگرایی پایش وضعیت با ساعات اوج بار شبکه برق و قیمت انرژی، دستور کارهای بهینه‌سازی را در نرم‌افزارهای CMMS نظیر SAP و مکسیمو صادر کرده و بازده انرژی را تا ۱۲٪ ارتقا می‌بخشد.
+                    {t('nazmgar_desc')}
                   </p>
                 </div>
                 <a
                   href="#/nazmgar"
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline pt-2 border-t border-slate-200 dark:border-slate-800"
                 >
-                  <span>ورود به سیستم بهینه‌سازی بار</span>
-                  <ChevronLeft size={14} />
+                  <span>{t('nav_nazmgar')}</span>
+                  {isRtl ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
                 </a>
               </div>
             </div>
@@ -620,41 +626,41 @@ export const LandingPage: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3">
                 <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-sky-500/20 text-sky-700 dark:text-sky-300">
-                  سطح ۱: توصیفی (Descriptive)
+                  Level 1
                 </span>
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white">مدل هندسی و هندسه ۳بعدی CAD</h3>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">{t('level1_title')}</h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                  بازنمایی فضایی تجهیزات به همراه مقطع اجزا، جانمایی شفت، محفظه بیرینگ‌ها و پکینگ‌ها در موتور Three.js.
+                  {t('level1_desc')}
                 </p>
               </div>
 
               <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3">
                 <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-teal-500/20 text-teal-700 dark:text-teal-300">
-                  سطح ۲: آگاه‌کننده (Informative)
+                  Level 2
                 </span>
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white">اتصال بلادرنگ تله‌متری و گرادیان دما</h3>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">{t('level2_title')}</h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                  نگاشت زنده جریان ارتعاشات RMS و تغییرات رنگ قطعات به صورت حرارتی همراه با نمایش پارامترهای هیدرودینامیکی.
+                  {t('level2_desc')}
                 </p>
               </div>
 
               <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3">
                 <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-700 dark:text-purple-300">
-                  سطح ۳: پیش‌بینانه (Predictive)
+                  Level 3
                 </span>
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white">مدل‌های فیزیک تخریب و RUL هوش مصنوعی</h3>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">{t('level3_title')}</h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                  تخمین عمر باقیمانده (RUL) با ادغام مدل مکانیک شکست پاریس-اردوغان و شبکه‌های عصبی عمیق تحلیل طیفی.
+                  {t('level3_desc')}
                 </p>
               </div>
 
               <div className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 space-y-3">
                 <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-700 dark:text-rose-300">
-                  سطح ۴: خودمختار (Autonomous)
+                  Level 4
                 </span>
-                <h3 className="text-sm font-bold text-slate-900 dark:text-white">فرمان حلقه بسته CMMS و اقدامات مداخله</h3>
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white">{t('level4_title')}</h3>
                 <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
-                  صدور خودکار دستور کار تعمیراتی، رزرو قطعه یدکی در انبار و مداخله هدایت‌شده بدون نیاز به مداخله دستی کاربر.
+                  {t('level4_desc')}
                 </p>
               </div>
             </div>
@@ -665,7 +671,7 @@ export const LandingPage: React.FC = () => {
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-sky-600 to-cyan-600 hover:from-sky-500 hover:to-cyan-500 text-white text-xs font-bold shadow-lg shadow-sky-600/30 transition-all"
               >
                 <Boxes size={16} />
-                <span>مشاهده دوقلوی سه‌بعدی تعاملی در پلتفرم</span>
+                <span>{t('hero_cta_twin')}</span>
               </a>
             </div>
           </div>
@@ -675,15 +681,15 @@ export const LandingPage: React.FC = () => {
         {activeTab === 'benchmark' && (
           <div className="space-y-4 animate-in fade-in-50 duration-300">
             <div className="overflow-x-auto">
-              <table className="w-full text-right text-xs border-collapse">
+              <table className="w-full text-right text-xs border-collapse min-w-[650px]">
                 <thead>
                   <tr className="border-b border-slate-200 dark:border-slate-800 text-slate-500 dark:text-slate-400">
-                    <th className="p-3 font-bold">فروشنده و پلتفرم</th>
-                    <th className="p-3 font-bold">نقاط قوت مهندسی</th>
-                    <th className="p-3 font-bold">چالش‌ها و قفل مشتری</th>
-                    <th className="p-3 font-bold">اثبات زنجیره حقیقت</th>
-                    <th className="p-3 font-bold">وابستگی به ابر خارجی</th>
-                    <th className="p-3 font-bold">ریسک تحریم در ایران</th>
+                    <th className="p-3 font-bold">{t('benchmark_vendor')}</th>
+                    <th className="p-3 font-bold">{t('benchmark_strengths')}</th>
+                    <th className="p-3 font-bold">{t('benchmark_weaknesses')}</th>
+                    <th className="p-3 font-bold">{t('evidence_integrity')}</th>
+                    <th className="p-3 font-bold">{t('benchmark_cloud_dep')}</th>
+                    <th className="p-3 font-bold">{t('benchmark_sanction_risk')}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-200 dark:divide-slate-800/60">
@@ -740,17 +746,17 @@ export const LandingPage: React.FC = () => {
       </section>
 
       {/* Live Fleet Preview Grid */}
-      <section className="p-6 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-4 shadow-xl transition-colors">
+      <section className="p-5 sm:p-7 rounded-3xl bg-white dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-4 shadow-xl transition-colors">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
           <div>
             <div className="flex items-center gap-2">
               <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping" />
               <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white">
-                ناوگان تجهیزات تحت پایش پیوسته ({assets.length} واحد فعال)
+                {t('didban_asset_list')} ({assets.length})
               </h2>
             </div>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              تله‌متری زنده و ارتعاشات RMS ثبت‌شده در گره‌های لبه با گواهی کالیبراسیون فعال
+              {t('didban_live_telemetry')}
             </p>
           </div>
 
@@ -759,8 +765,8 @@ export const LandingPage: React.FC = () => {
               href="#/maintenance"
               className="text-xs font-bold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1"
             >
-              <span>لاگ کامل تخریب و سرویس</span>
-              <ChevronLeft size={14} />
+              <span>{t('nav_maintenance')}</span>
+              {isRtl ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
             </a>
           </div>
         </div>

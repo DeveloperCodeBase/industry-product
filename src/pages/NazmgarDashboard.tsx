@@ -15,7 +15,7 @@ import {
 import { useApp } from '../context/AppContext';
 
 export const NazmgarDashboard: React.FC = () => {
-  const { assets } = useApp();
+  const { assets, t } = useApp();
   const [throttleAccepted, setThrottleAccepted] = useState(false);
 
   // Hourly plan vs actual production data (tons/hour or units)
@@ -32,28 +32,28 @@ export const NazmgarDashboard: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-5 sm:p-6 rounded-2xl shadow-xl">
         <div>
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
               <CalendarCheck size={20} />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">ویستا-نظم‌گر (Vista-Nazmgar)</h1>
-              <span className="text-xs text-emerald-400 font-mono">انطباق برنامه تولید ERP با واقعیت فیزیکی کارخانه</span>
+              <h1 className="text-xl font-bold text-white">{t('nazmgar_header_title')}</h1>
+              <span className="text-xs text-emerald-400 font-mono">{t('nazmgar_header_sub')}</span>
             </div>
           </div>
           <p className="text-xs text-slate-400 mt-2 max-w-2xl leading-relaxed">
-            محصول سوم سه‌گانه ویستا: از بین بردن شکاف بین خوش‌بینی کاذب سیستم‌های برنامه‌ریزی بالا‌دستی و توان واقعی ماشین‌آلات، با محاسبه پاکت توان عملیاتی (Throughput Envelope).
+            {t('nazmgar_header_desc')}
           </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          <div className="bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-center">
-            <div className="text-[11px] text-slate-400">تحقق برنامه شیفت</div>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-center flex-1 sm:flex-none min-w-[120px]">
+            <div className="text-[11px] text-slate-400">{t('nazmgar_production_schedule')}</div>
             <div className="text-lg font-black font-mono text-amber-400 mt-0.5">۸۳.۶٪</div>
           </div>
-          <div className="bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-center">
+          <div className="bg-slate-950 px-4 py-2 rounded-xl border border-slate-800 text-center flex-1 sm:flex-none min-w-[120px]">
             <div className="text-[11px] text-slate-400">گلوگاه فعال خط</div>
             <div className="text-lg font-black font-mono text-rose-400 mt-0.5">K-04</div>
           </div>

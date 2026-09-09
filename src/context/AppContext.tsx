@@ -96,6 +96,7 @@ interface AppContextType {
   setLanguage: (lang: SupportedLanguage) => void;
   t: (key: string) => string;
   currentLanguageInfo: LanguageInfo;
+  isRtl: boolean;
 
   // Notifications Center
   notifications: IndustrialNotification[];
@@ -176,6 +177,9 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const t = (key: string): string => {
     if (TRANSLATIONS[language] && TRANSLATIONS[language][key]) {
       return TRANSLATIONS[language][key];
+    }
+    if (language !== 'en' && TRANSLATIONS['en'] && TRANSLATIONS['en'][key]) {
+      return TRANSLATIONS['en'][key];
     }
     if (TRANSLATIONS['fa'] && TRANSLATIONS['fa'][key]) {
       return TRANSLATIONS['fa'][key];
@@ -309,6 +313,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setLanguage,
         t,
         currentLanguageInfo,
+        isRtl: currentLanguageInfo.dir === 'rtl',
         notifications,
         unreadNotifsCount,
         markNotificationAsRead,

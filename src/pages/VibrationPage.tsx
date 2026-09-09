@@ -16,7 +16,7 @@ import { useApp } from '../context/AppContext';
 import { dataEngine } from '../services/syntheticData';
 
 export const VibrationPage: React.FC = () => {
-  const { assets, selectedAssetId, setSelectedAssetId } = useApp();
+  const { assets, selectedAssetId, setSelectedAssetId, t } = useApp();
   const selected = assets.find((a) => a.id === selectedAssetId) || assets[0];
   const fftData = dataEngine.getFFTSpectrum(selected.id);
 
@@ -54,15 +54,15 @@ export const VibrationPage: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Top Asset Selector & Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-5 sm:p-6 rounded-2xl shadow-xl">
         <div>
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400">
               <Waves size={20} />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">آنالیز ارتعاشات، طیف فرکانسی FFT و هوش مصنوعی تبیین‌پذیر (XAI)</h1>
-              <span className="text-xs text-sky-400 font-mono">استاندارد ISO 10816/20816 • تفکیک هارمونیک‌های ۱X، ۲X، ۳X</span>
+              <h1 className="text-xl font-bold text-white">{t('vibration_analysis')}</h1>
+              <span className="text-xs text-sky-400 font-mono">ISO 10816/20816 • FFT • 1X, 2X, 3X Harmonics</span>
             </div>
           </div>
           <p className="text-xs text-slate-400 mt-2 max-w-2xl leading-relaxed">
@@ -71,7 +71,7 @@ export const VibrationPage: React.FC = () => {
         </div>
 
         <div className="flex items-center gap-2">
-          <span className="text-xs text-slate-400 font-medium">انتخاب دارایی:</span>
+          <span className="text-xs text-slate-400 font-medium whitespace-nowrap">انتخاب دارایی:</span>
           <select
             value={selected.id}
             onChange={(e) => setSelectedAssetId(e.target.value)}
@@ -79,7 +79,7 @@ export const VibrationPage: React.FC = () => {
           >
             {assets.map((a) => (
               <option key={a.id} value={a.id}>
-                {a.id.toUpperCase()} — {a.faName}
+                {a.id.toUpperCase()} — {a.faName || a.name}
               </option>
             ))}
           </select>

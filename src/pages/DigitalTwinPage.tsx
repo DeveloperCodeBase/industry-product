@@ -32,7 +32,7 @@ export const DigitalTwinPage: React.FC = () => {
   const [viewMode, setViewMode] = useState<'both' | '3d' | 'telemetry'>('both');
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+    <div className="space-y-6 w-full max-w-[1920px] mx-auto pb-12">
       {/* Top Header & Maturity Levels Guide */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl shadow-xl">
         <div>

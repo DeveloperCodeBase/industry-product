@@ -14,7 +14,7 @@ import {
 import { useApp } from '../context/AppContext';
 
 export const PasdarDashboard: React.FC = () => {
-  const { assets } = useApp();
+  const { assets, t } = useApp();
   const [selectedZone, setSelectedZone] = useState<string>('zone_gas_compression');
 
   const zones = [
@@ -96,27 +96,27 @@ export const PasdarDashboard: React.FC = () => {
   return (
     <div className="space-y-6 pb-12">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/90 border border-slate-800 p-5 sm:p-6 rounded-2xl shadow-xl">
         <div>
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400">
               <ShieldAlert size={20} />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">ویستا-پاسدار (Vista-Pasdar)</h1>
-              <span className="text-xs text-amber-400 font-mono">پایایی، پایش ریسک مناطق کارخانه و هشدارهای ورود مجدد</span>
+              <h1 className="text-xl font-bold text-white">{t('pasdar_header_title')}</h1>
+              <span className="text-xs text-amber-400 font-mono">{t('pasdar_header_sub')}</span>
             </div>
           </div>
           <p className="text-xs text-slate-400 mt-2 max-w-2xl leading-relaxed">
-            محصول دوم سه‌گانه ویستا: مدیریت ریسک فیزیکی، نقشه ۲بعدی زون‌های حساس، هشدارهای مواجهه اپراتور و انطباق با سطوح ایمنی صنعتی IEC 62443.
+            {t('pasdar_header_desc')}
           </p>
         </div>
 
-        <div className="flex items-center gap-2 bg-slate-950 p-2 rounded-xl border border-slate-800 text-xs">
+        <div className="flex items-center gap-2 bg-slate-950 p-2.5 rounded-xl border border-slate-800 text-xs shrink-0">
           <ShieldCheck size={18} className="text-emerald-400" />
           <div>
-            <div className="font-bold text-white">پایش ایمنی OT فعال</div>
-            <div className="text-[10px] text-slate-400">سطح اطمینان SL-2 صنعتی</div>
+            <div className="font-bold text-white">{t('pasdar_interlock_status')}</div>
+            <div className="text-[10px] text-slate-400">IEC 61508 SIL-2</div>
           </div>
         </div>
       </div>
@@ -127,9 +127,9 @@ export const PasdarDashboard: React.FC = () => {
           <div className="flex items-center justify-between">
             <h2 className="text-base font-bold text-white flex items-center gap-2">
               <Compass size={18} className="text-sky-400" />
-              طرح‌بندی ۲بعدی کارخانه و هیت‌مپ مناطق ریسک
+              {t('pasdar_safety_matrix')}
             </h2>
-            <span className="text-xs font-mono text-slate-400">برای مشاهده روی هر زون کلیک کنید</span>
+            <span className="text-xs font-mono text-slate-400">{t('pasdar_zones')}</span>
           </div>
 
           {/* Blueprint Canvas Graphic */}
@@ -137,7 +137,7 @@ export const PasdarDashboard: React.FC = () => {
             {/* Background architectural grid */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:24px_24px] opacity-20 pointer-events-none" />
 
-            <div className="relative z-10 grid grid-cols-2 gap-4 h-full flex-1">
+            <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-4 h-full flex-1">
               {zones.map((z) => {
                 const isSelected = selectedZone === z.id;
                 return (

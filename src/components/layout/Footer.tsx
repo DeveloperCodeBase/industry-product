@@ -52,7 +52,7 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="border-t border-slate-800 bg-slate-950 text-slate-400 py-10 px-4 sm:px-8 mt-auto">
-      <div className="max-w-7xl mx-auto space-y-8">
+      <div className="w-full max-w-[1920px] mx-auto space-y-8">
         {/* Visual Data Integrity & Synchronized Block Status Banner */}
         <div className="p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900/90 to-slate-950 border border-slate-800/80 shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-3">

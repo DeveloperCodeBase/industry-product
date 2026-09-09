@@ -9,12 +9,16 @@ import {
   Boxes,
   Lock,
   ArrowRight,
+  ArrowLeft,
   ExternalLink,
   ChevronRight,
+  ChevronLeft,
   Sparkles
 } from 'lucide-react';
+import { useApp } from '../context/AppContext';
 
 export const HafezePage: React.FC = () => {
+  const { isRtl, t } = useApp();
   const [selectedNodeId, setSelectedNodeId] = useState<string>('sensor_anomaly');
 
   const nodes = [
@@ -107,29 +111,29 @@ export const HafezePage: React.FC = () => {
   const activeNode = nodes.find((n) => n.id === selectedNodeId) || nodes[0];
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="w-full max-w-[1920px] mx-auto space-y-6 pb-12">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 p-5 rounded-2xl shadow-xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 p-4 sm:p-5 rounded-2xl shadow-xl">
         <div>
           <div className="flex items-center gap-2">
             <div className="w-9 h-9 rounded-xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center text-sky-400">
               <GitFork size={20} />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-white">ویستا-حافظه (Vista-Hafeze)</h1>
-              <span className="text-xs text-sky-400 font-mono">گراف دانش بافتار سازمانی • پیوند سنسور به ERP/CMMS/SOP</span>
+              <h1 className="text-lg sm:text-xl font-bold text-white">{t('hafeze_header_title')}</h1>
+              <span className="text-xs text-sky-400 font-mono">{t('hafeze_header_sub')}</span>
             </div>
           </div>
           <p className="text-xs text-slate-400 mt-2 max-w-2xl leading-relaxed">
-            محصول چهارم اکوسیستم ویستا: داده خام هرگز بدون بافتار سازمانی معنا ندارد. پیوند خودکار سیگنال‌های حسگر به دستور کار تعمیرات، قطعات انبار و تجربیات تکنسین‌ها.
+            {t('hafeze_header_desc')}
           </p>
         </div>
 
         <div className="flex items-center gap-2 bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 text-xs">
-          <Sparkles size={16} className="text-sky-400" />
+          <Sparkles size={16} className="text-sky-400 shrink-0" />
           <div>
-            <div className="font-bold text-white">گراف دانش چندموجودیتی</div>
-            <div className="text-[10px] text-slate-400">۷ گره معنایی متصل</div>
+            <div className="font-bold text-white">{t('hafeze_graph_badge')}</div>
+            <div className="text-[10px] text-slate-400">{t('hafeze_graph_nodes_count')}</div>
           </div>
         </div>
       </div>
@@ -137,17 +141,17 @@ export const HafezePage: React.FC = () => {
       {/* Interactive Graph Canvas & Linked Inspector */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Visual Graph Node Network (8 cols) */}
-        <div className="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div className="lg:col-span-8 bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-800 pb-3 flex-wrap gap-2">
             <h2 className="text-sm font-bold text-white flex items-center gap-2">
               <GitFork size={16} className="text-sky-400" />
-              شبکه پیوندهای معنایی تجهیز K-04
+              {t('hafeze_network_title')}
             </h2>
-            <span className="text-xs font-mono text-slate-400">برای بررسی روی هر گره کلیک کنید</span>
+            <span className="text-xs font-mono text-slate-400">{t('hafeze_network_hint')}</span>
           </div>
 
           {/* Node Grid Layout representing the graph */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             {nodes.map((node) => {
               const Icon = node.icon;
               const isSelected = selectedNodeId === node.id;
@@ -170,7 +174,7 @@ export const HafezePage: React.FC = () => {
 
                   <div className="flex items-start gap-2.5">
                     <Icon size={18} className="shrink-0 mt-0.5" />
-                    <div>
+                    <div className="min-w-0 flex-1 text-start">
                       <h3 className="font-bold text-xs text-white leading-snug">{node.title}</h3>
                       <p className="text-[11px] text-slate-400 mt-1 line-clamp-2 leading-relaxed">
                         {node.details}
@@ -181,7 +185,7 @@ export const HafezePage: React.FC = () => {
                   {node.links.length > 0 && (
                     <div className="mt-3 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] text-slate-400 font-mono">
                       <span>پیوند به: {node.links.length} رکورد سازمانی</span>
-                      <ChevronRight size={12} className="text-sky-400" />
+                      {isRtl ? <ChevronLeft size={12} className="text-sky-400" /> : <ChevronRight size={12} className="text-sky-400" />}
                     </div>
                   )}
                 </div>
@@ -191,23 +195,23 @@ export const HafezePage: React.FC = () => {
         </div>
 
         {/* Selected Node Details Panel (4 cols) */}
-        <div className="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4 flex flex-col justify-between">
+        <div className="lg:col-span-4 bg-slate-900 border border-slate-800 rounded-2xl p-4 sm:p-5 shadow-xl space-y-4 flex flex-col justify-between">
           <div className="space-y-3">
-            <div className="border-b border-slate-800 pb-3">
+            <div className="border-b border-slate-800 pb-3 text-start">
               <span className="text-[10px] font-mono text-sky-400 uppercase">{activeNode.type}</span>
               <h3 className="font-bold text-base text-white mt-1">{activeNode.title}</h3>
               <div className="text-xs text-slate-400 mt-1">{activeNode.date}</div>
             </div>
 
-            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
-              <div className="text-xs font-semibold text-slate-300">شرح بافتار در ویستا-حافظه:</div>
+            <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2 text-start">
+              <div className="text-xs font-semibold text-slate-300">{t('hafeze_linked_details')}</div>
               <p className="text-xs text-slate-300 leading-relaxed">{activeNode.details}</p>
             </div>
 
-            <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2 text-xs">
-              <div className="font-semibold text-slate-300">اتصالات مستقیم در گراف دانش:</div>
+            <div className="bg-slate-950 p-3 rounded-xl border border-slate-800 space-y-2 text-xs text-start">
+              <div className="font-semibold text-slate-300">{t('hafeze_related_nodes')}</div>
               {activeNode.links.length === 0 ? (
-                <div className="text-slate-500 text-[11px]">گره انتهایی (Leaf Node)</div>
+                <div className="text-slate-500 text-[11px]">Leaf Node</div>
               ) : (
                 <div className="space-y-1.5">
                   {activeNode.links.map((linkId) => {
@@ -217,10 +221,10 @@ export const HafezePage: React.FC = () => {
                       <button
                         key={linkId}
                         onClick={() => setSelectedNodeId(linkId)}
-                        className="w-full text-right p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-[11px] text-sky-300 flex items-center justify-between border border-slate-800"
+                        className="w-full text-start p-2 rounded-lg bg-slate-900 hover:bg-slate-800 text-[11px] text-sky-300 flex items-center justify-between border border-slate-800 transition-colors"
                       >
                         <span className="truncate">{targetNode.title}</span>
-                        <ArrowRight size={12} className="shrink-0" />
+                        {isRtl ? <ArrowLeft size={12} className="shrink-0" /> : <ArrowRight size={12} className="shrink-0" />}
                       </button>
                     );
                   })}
@@ -234,7 +238,7 @@ export const HafezePage: React.FC = () => {
               href="#/truth-block"
               className="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs text-center flex items-center justify-center gap-2 transition-colors"
             >
-              <span>مشاهده بلوک‌های حقیقت مرتبط</span>
+              <span>{t('nav_truth_block')}</span>
               <ExternalLink size={14} />
             </a>
           </div>

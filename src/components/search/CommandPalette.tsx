@@ -462,15 +462,15 @@ export const CommandPalette: React.FC = () => {
       <button
         id="global-command-palette-trigger"
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-xl bg-slate-800/80 dark:bg-slate-800/80 light:bg-slate-100 hover:bg-slate-700/90 text-slate-300 dark:text-slate-300 light:text-slate-700 border border-slate-700/60 dark:border-slate-700/60 light:border-slate-200 transition-all text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/50"
+        className="flex items-center gap-1.5 sm:gap-2 p-2 sm:px-3 sm:py-1.5 rounded-xl bg-slate-800/80 dark:bg-slate-800/80 light:bg-slate-100 hover:bg-slate-700/90 text-slate-300 dark:text-slate-300 light:text-slate-700 border border-slate-700/60 dark:border-slate-700/60 light:border-slate-200 transition-all text-xs focus:outline-none focus:ring-2 focus:ring-sky-500/50"
         title="جستجوی سریع (Ctrl+K)"
         aria-label="جستجوی سریع در پلتفرم"
       >
         <Search size={15} className="text-sky-400 shrink-0" />
-        <span className="hidden md:inline text-slate-400 dark:text-slate-400 light:text-slate-500 max-w-[170px] lg:max-w-[220px] truncate">
+        <span className="hidden xl:inline text-slate-400 dark:text-slate-400 light:text-slate-500 max-w-[140px] 2xl:max-w-[200px] truncate">
           {t('search_placeholder')}
         </span>
-        <span className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-900/80 dark:bg-slate-900/80 light:bg-white text-[10px] font-mono text-slate-400 dark:text-slate-400 light:text-slate-600 border border-slate-700/70 dark:border-slate-700/70 light:border-slate-300">
+        <span className="hidden 2xl:inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded bg-slate-900/80 dark:bg-slate-900/80 light:bg-white text-[10px] font-mono text-slate-400 dark:text-slate-400 light:text-slate-600 border border-slate-700/70 dark:border-slate-700/70 light:border-slate-300">
           <kbd className="font-sans">Ctrl</kbd>
           <span>K</span>
         </span>
@@ -682,23 +682,6 @@ export const CommandPalette: React.FC = () => {
           </div>
         </div>
       )}
-
-      {/* Floating Quick Search Command Palette Trigger (Ctrl+K) */}
-      <button
-        id="floating-command-palette-trigger"
-        onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 left-6 z-40 px-3.5 py-2.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 border border-slate-700 shadow-2xl backdrop-blur-md flex items-center gap-2.5 transition-all hover:scale-105 group print:hidden"
-        title="جستجوی سریع در اسناد، دارایی‌ها و صفحات (Ctrl+K)"
-        aria-label="جستجوی سریع با کلید میانبر Ctrl+K"
-      >
-        <div className="p-1 rounded-lg bg-sky-500/20 text-sky-400 group-hover:bg-sky-500 group-hover:text-white transition-colors">
-          <Search size={15} />
-        </div>
-        <span className="text-xs font-bold hidden sm:inline">جستجوی سراسری</span>
-        <kbd className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-sky-400">
-          Ctrl + K
-        </kbd>
-      </button>
     </>
   );
 };
