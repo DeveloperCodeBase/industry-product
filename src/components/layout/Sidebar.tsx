@@ -15,7 +15,14 @@ import {
   Lock,
   GitFork,
   Network,
-  LogOut
+  LogOut,
+  Gauge,
+  Wrench,
+  QrCode,
+  GitCompare,
+  DownloadCloud,
+  Share2,
+  Crosshair
 } from 'lucide-react';
 import { useApp } from '../../context/AppContext';
 
@@ -51,16 +58,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
       ],
     },
     {
-      name: 'تحلیل تخصصی و شبیه‌سازی',
+      name: 'تحلیل تخصصی و پایش بلادرنگ',
       items: [
+        { href: '#/realtime', label: 'داشبورد بلادرنگ سنسورها', icon: Gauge, badge: 'Recharts' },
+        { href: '#/maintenance', label: 'لاگ سلامت و زوال قطعات', icon: Wrench, badge: 'AI PdM' },
         { href: '#/vibration', label: t('nav_vibration'), icon: Waves },
         { href: '#/what-if', label: t('nav_what_if'), icon: Sliders },
         { href: '#/truth-block', label: t('nav_truth_block'), icon: ShieldCheck, badge: `${truthBlocks.length}` },
       ],
     },
     {
-      name: 'اسناد، استقرار و پرسونای کاربری',
+      name: 'اسناد فنی و ابزارهای هوشمند',
       items: [
+        { href: '#/schematic-overlay', label: 'اورلی تعاملی نقشه‌ها و قطعات', icon: Crosshair, badge: 'Overlay' },
+        { href: '#/knowledge-graph', label: 'گراف دانش اسناد و قطعات', icon: GitFork, badge: 'D3.js' },
+        { href: '#/doc-comparison', label: 'مقایسه‌گر ویرایش‌های اسناد', icon: GitCompare, badge: 'Diff' },
+        { href: '#/offline-docs', label: 'اسناد آفلاین میدانی (PWA)', icon: DownloadCloud, badge: 'PWA' },
+        { href: '#/annotations', label: 'یادداشت‌های نقشه P&ID', icon: FileText, badge: 'همکارانه' },
         { href: '#/proposals-contracts', label: t('nav_contracts'), icon: FileSpreadsheet, badge: 'مهر رسمی' },
         { href: '#/guide', label: t('nav_guide'), icon: BookOpen },
         { href: '#/login', label: t('nav_login'), icon: Lock },

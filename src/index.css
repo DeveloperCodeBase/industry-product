@@ -14,9 +14,28 @@
   body {
     direction: rtl;
     font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    transition: background-color 0.2s ease, color 0.2s ease;
   }
 }
+
+/* Smooth theme transition to prevent abrupt flashes when switching light/dark mode */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              fill 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-delay: 0s !important;
+}
+
+/* Ensure 3D canvas and chart surfaces remain high-performance */
+canvas, .no-theme-transition, .no-theme-transition * {
+  transition: none !important;
+}
+
 
 /* Custom industrial scrollbar */
 ::-webkit-scrollbar {

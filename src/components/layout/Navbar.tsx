@@ -22,11 +22,15 @@ import {
   LogOut,
   FileText,
   Network,
-  BookOpen
+  BookOpen,
+  QrCode
 } from 'lucide-react';
 import { useApp, USER_PROFILES } from '../../context/AppContext';
 import { PRESET_SCENARIOS } from '../../services/syntheticData';
 import { SUPPORTED_LANGUAGES, SupportedLanguage } from '../../i18n/translations';
+import { NotificationCenter } from '../notifications/NotificationCenter';
+import { CommandPalette } from '../search/CommandPalette';
+import { AssetQrScannerModal } from '../scanner/AssetQrScannerModal';
 
 interface NavbarProps {
   sidebarOpen: boolean;
@@ -57,6 +61,7 @@ export const Navbar: React.FC<NavbarProps> = ({ sidebarOpen, setSidebarOpen, isF
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
   const [scenarioDropdownOpen, setScenarioDropdownOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [scannerOpen, setScannerOpen] = useState(false);
 
   const currentLang = SUPPORTED_LANGUAGES.find((l) => l.code === language) || SUPPORTED_LANGUAGES[0];
 
@@ -224,14 +229,32 @@ export const Navbar: React.FC<NavbarProps> = ({ sidebarOpen, setSidebarOpen, isF
           </div>
         )}
 
-        {/* Left Section (in RTL) / Right (in LTR): Theme, Language, User/Auth */}
-        <div className="flex items-center gap-2 sm:gap-2.5">
-          {/* Light/Dark Mode Toggle */}
+        {/* Actions Section: Command Palette, Notifications, Theme, Language, User/Auth */}
+        <div className="flex items-center gap-1.5 sm:gap-2.5">
+          {/* Global Search Bar / Command Palette Trigger */}
+          <CommandPalette />
+
+          {/* Field Machine QR Code Scanner Button */}
+          <button
+            id="navbar-qr-scanner-btn"
+            onClick={() => setScannerOpen(true)}
+            className="p-2 rounded-xl bg-purple-500/10 hover:bg-purple-500/20 text-purple-400 border border-purple-500/30 transition-colors"
+            title="اسکنر بارکد و QR کد تجهیزات میدانی"
+            aria-label="اسکنر بارکد تجهیزات"
+          >
+            <QrCode size={16} />
+          </button>
+
+          {/* Notification Center (System alerts, maintenance schedules, security updates) */}
+          <NotificationCenter />
+
+          {/* Light/Dark Mode Toggle with Smooth Transition */}
           <button
             id="theme-toggle-btn"
             onClick={toggleTheme}
             className="p-2 rounded-xl bg-slate-800/80 dark:bg-slate-800/80 light:bg-slate-100 hover:bg-slate-700 text-slate-300 dark:text-slate-300 light:text-slate-700 border border-slate-700/60 dark:border-slate-700/60 light:border-slate-200 transition-colors"
             title={theme === 'dark' ? t('theme_light') : t('theme_dark')}
+            aria-label="تغییر تم روشنایی و تاریکی"
           >
             {theme === 'dark' ? (
               <Sun size={16} className="text-amber-400" />
@@ -240,21 +263,29 @@ export const Navbar: React.FC<NavbarProps> = ({ sidebarOpen, setSidebarOpen, isF
             )}
           </button>
 
-          {/* Multi-language Selector Dropdown */}
+          {/* Multi-language Selector Toggle Dropdown (Persian, English, Arabic, Turkish) */}
           <div className="relative">
             <button
               id="language-switcher-btn"
               onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-slate-800/80 dark:bg-slate-800/80 light:bg-slate-100 hover:bg-slate-700 text-slate-300 dark:text-slate-300 light:text-slate-700 border border-slate-700/60 dark:border-slate-700/60 light:border-slate-200 text-xs font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-800/80 dark:bg-slate-800/80 light:bg-slate-100 hover:bg-slate-700 text-slate-300 dark:text-slate-300 light:text-slate-700 border border-slate-700/60 dark:border-slate-700/60 light:border-slate-200 text-xs font-semibold transition-colors"
               title={t('lang_select')}
+              aria-label="انتخاب زبان سیستم"
             >
+              <Globe size={14} className="text-sky-400 shrink-0" />
               <span>{currentLang.flag}</span>
-              <span className="hidden sm:inline font-mono uppercase text-[11px]">{currentLang.code}</span>
+              <span className="hidden sm:inline text-[11px] font-medium">{currentLang.nativeName}</span>
               <ChevronDown size={13} className="text-slate-400" />
             </button>
 
             {langDropdownOpen && (
-              <div className="absolute left-0 mt-1.5 w-36 bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-800 dark:border-slate-800 light:border-slate-200 rounded-xl shadow-2xl py-1 z-50">
+              <div
+                id="language-dropdown-menu"
+                className="absolute rtl:left-0 ltr:right-0 mt-2 w-44 bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-800 dark:border-slate-800 light:border-slate-200 rounded-2xl shadow-2xl py-1.5 z-50 overflow-hidden"
+              >
+                <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-800 dark:border-slate-800 light:border-slate-200 mb-1">
+                  {t('lang_select')}
+                </div>
                 {SUPPORTED_LANGUAGES.map((l) => (
                   <button
                     key={l.code}
@@ -269,10 +300,13 @@ export const Navbar: React.FC<NavbarProps> = ({ sidebarOpen, setSidebarOpen, isF
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <span>{l.flag}</span>
-                      <span>{l.nativeName}</span>
+                      <span className="text-sm">{l.flag}</span>
+                      <div className="text-right">
+                        <div className="font-semibold leading-none">{l.nativeName}</div>
+                        <div className="text-[10px] text-slate-400 font-mono mt-0.5">{l.name}</div>
+                      </div>
                     </div>
-                    {language === l.code && <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />}
+                    {language === l.code && <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-sm shadow-sky-400" />}
                   </button>
                 ))}
               </div>
@@ -380,6 +414,12 @@ export const Navbar: React.FC<NavbarProps> = ({ sidebarOpen, setSidebarOpen, isF
           )}
         </div>
       </div>
+
+      {/* Field Asset QR & Barcode Scanner Modal */}
+      <AssetQrScannerModal
+        isOpen={scannerOpen}
+        onClose={() => setScannerOpen(false)}
+      />
     </header>
   );
 };

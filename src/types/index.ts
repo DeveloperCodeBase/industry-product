@@ -212,3 +212,90 @@ export interface HafezeIncidentRecord {
   signedBy: string;
   isImmutableTruthLinked: boolean;
 }
+
+export type NotificationCategory = 'system' | 'maintenance' | 'security';
+export type NotificationSeverity = 'critical' | 'warning' | 'info' | 'success';
+
+export interface IndustrialNotification {
+  id: string;
+  category: NotificationCategory;
+  severity: NotificationSeverity;
+  titleFa: string;
+  titleEn: string;
+  titleAr?: string;
+  titleTr?: string;
+  messageFa: string;
+  messageEn: string;
+  messageAr?: string;
+  messageTr?: string;
+  timestamp: string;
+  read: boolean;
+  assetId?: string;
+  actionRoute?: string;
+  actionLabelFa?: string;
+  actionLabelEn?: string;
+  metadata?: Record<string, any>;
+}
+
+// Collaborative Annotation on Technical Diagrams & PDFs
+export interface DiagramAnnotation {
+  id: string;
+  diagramId: string;
+  diagramTitle: string;
+  xPercent: number; // 0-100% position on canvas
+  yPercent: number; // 0-100% position on canvas
+  authorName: string;
+  authorRole: string;
+  authorAvatar?: string;
+  category: 'vibration_defect' | 'safety_hazard' | 'maintenance_note' | 'calibration_audit' | 'design_change';
+  severity: 'critical' | 'warning' | 'info';
+  title: string;
+  comment: string;
+  timestamp: string;
+  status: 'open' | 'in_review' | 'resolved';
+  resolvedBy?: string;
+  resolvedAt?: string;
+}
+
+// Maintenance Log & Component Degradation Trends
+export interface ComponentHealthRecord {
+  componentName: string;
+  componentKey: string;
+  healthScore: number; // 0 - 100%
+  degradationRate: number; // % per month
+  criticality: 'critical' | 'high' | 'medium';
+  primaryStressFactor: string;
+  recommendedInspectionDays: number;
+}
+
+export interface MaintenanceIntervention {
+  id: string;
+  assetId: string;
+  assetName: string;
+  component: string;
+  suggestedAction: string;
+  technicalDetails: string;
+  confidenceScore: number; // e.g. 96.5%
+  priority: 'emergency' | 'high' | 'scheduled' | 'preventive';
+  status: 'completed' | 'in_progress' | 'scheduled' | 'overdue';
+  triggeredBy: string;
+  suggestedDate: string;
+  completedDate?: string;
+  technicianName?: string;
+  preventedDowntimeHours: number;
+  economicSavingsMillionTomans: number;
+}
+
+export interface DegradationDataPoint {
+  timestamp: string;
+  dayIndex: number;
+  overallHealth: number; // 0-100%
+  bearingWearIndex: number; // 0-10
+  vibrationRms: number; // mm/s
+  envelopePeakG: number; // g
+  temperatureC: number; // °C
+  rulForecastHours: number;
+  isForecast?: boolean;
+}
+
+

@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
-import { Asset, FaultScenario, TruthBlock, TwinMaturityMode, UserProfile, SupportedLanguage, ThemeMode } from '../types';
+import { Asset, FaultScenario, TruthBlock, TwinMaturityMode, UserProfile, SupportedLanguage, ThemeMode, IndustrialNotification } from '../types';
 import { dataEngine, INITIAL_ASSETS } from '../services/syntheticData';
 import { TRANSLATIONS, SUPPORTED_LANGUAGES, LanguageInfo } from '../i18n/translations';
+import { INITIAL_NOTIFICATIONS } from '../data/notificationsData';
 
 export const USER_PROFILES: UserProfile[] = [
   {
@@ -95,6 +96,14 @@ interface AppContextType {
   setLanguage: (lang: SupportedLanguage) => void;
   t: (key: string) => string;
   currentLanguageInfo: LanguageInfo;
+
+  // Notifications Center
+  notifications: IndustrialNotification[];
+  unreadNotifsCount: number;
+  markNotificationAsRead: (id: string) => void;
+  markAllNotificationsAsRead: () => void;
+  clearReadNotifications: () => void;
+  addNotification: (notif: IndustrialNotification) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -106,6 +115,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [activeScenario, setActiveScenarioState] = useState<FaultScenario | null>(null);
   const [twinMaturity, setTwinMaturity] = useState<TwinMaturityMode>('informative');
   const [currentUser, setCurrentUser] = useState<UserProfile>(USER_PROFILES[0]);
+  const [notifications, setNotifications] = useState<IndustrialNotification[]>(INITIAL_NOTIFICATIONS);
   
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     return localStorage.getItem('vista_authenticated') === 'true';
@@ -123,10 +133,11 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [simSpeed, setSimSpeedState] = useState<number>(1);
   const [historicalPlaybackTime, setHistoricalPlaybackTime] = useState<number | null>(null);
 
-  // Sync theme changes to document
+  // Sync theme changes to document with smooth CSS transition
   useEffect(() => {
     localStorage.setItem('vista_theme', theme);
     const root = document.documentElement;
+    root.classList.add('theme-transition');
     if (theme === 'dark') {
       root.classList.add('dark');
       root.classList.remove('light');
@@ -134,6 +145,10 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       root.classList.add('light');
       root.classList.remove('dark');
     }
+    const timer = setTimeout(() => {
+      root.classList.remove('theme-transition');
+    }, 380);
+    return () => clearTimeout(timer);
   }, [theme]);
 
   // Sync language and direction changes
@@ -199,7 +214,47 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
   const setScenario = (id: string | null) => {
     dataEngine.setScenario(id);
-    setActiveScenarioState(dataEngine.getActiveScenario());
+    const sc = dataEngine.getActiveScenario();
+    setActiveScenarioState(sc);
+    if (sc) {
+      const targetId = sc.assetId || 'compressor-04';
+      const scenarioAlert: IndustrialNotification = {
+        id: `notif-scenario-${Date.now()}`,
+        category: 'system',
+        severity: 'critical',
+        titleFa: `تزریق سناریوی بحرانی: ${sc.titleFa || 'سناریوی ارتعاشی'}`,
+        titleEn: `Critical Fault Injected: ${sc.titleEn || 'Fault Scenario'}`,
+        titleAr: `حقن سيناريو العطل: ${sc.titleFa || 'سيناريو'}`,
+        titleTr: `Arıza Senaryosu Eklendi: ${sc.titleEn || 'Arıza'}`,
+        messageFa: `آستانه‌های فیزیکی و امضای ارتعاشی تغییر یافتند. پیامد فیزیکی: ${sc.impactSummaryFa || sc.descriptionFa || 'ورود به محدوده هشدار'}`,
+        messageEn: `Physical thresholds and vibration signatures altered: ${sc.description || 'Elevated vibration levels'}`,
+        timestamp: 'هم‌اکنون',
+        read: false,
+        assetId: targetId,
+        actionRoute: targetId === 'compressor-04' ? '#/vibration' : '#/twin',
+        actionLabelFa: 'بررسی در دوقلوی دیجیتال',
+        actionLabelEn: 'Inspect in Digital Twin',
+      };
+      setNotifications((prev) => [scenarioAlert, ...prev]);
+    }
+  };
+
+  const unreadNotifsCount = notifications.filter((n) => !n.read).length;
+
+  const markNotificationAsRead = (id: string) => {
+    setNotifications((prev) => prev.map((n) => (n.id === id ? { ...n, read: true } : n)));
+  };
+
+  const markAllNotificationsAsRead = () => {
+    setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+  };
+
+  const clearReadNotifications = () => {
+    setNotifications((prev) => prev.filter((n) => !n.read));
+  };
+
+  const addNotification = (notif: IndustrialNotification) => {
+    setNotifications((prev) => [notif, ...prev]);
   };
 
   const toggleSimulation = () => {
@@ -254,6 +309,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
         setLanguage,
         t,
         currentLanguageInfo,
+        notifications,
+        unreadNotifsCount,
+        markNotificationAsRead,
+        markAllNotificationsAsRead,
+        clearReadNotifications,
+        addNotification,
       }}
     >
       {children}

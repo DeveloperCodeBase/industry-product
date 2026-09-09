@@ -18,6 +18,13 @@ import { ArchitecturePage } from './pages/ArchitecturePage';
 import { ProposalsContractsPage } from './pages/ProposalsContractsPage';
 import { GuidePage } from './pages/GuidePage';
 import { LoginPage } from './pages/LoginPage';
+import { RealTimeDashboard } from './components/dashboard/RealTimeDashboard';
+import { MaintenanceLog } from './components/maintenance/MaintenanceLog';
+import { TechnicalDiagramAnnotation } from './components/documents/TechnicalDiagramAnnotation';
+import { DocumentKnowledgeGraph } from './components/documents/DocumentKnowledgeGraph';
+import { DocumentComparison } from './components/documents/DocumentComparison';
+import { OfflineDocsManager } from './components/documents/OfflineDocsManager';
+import { SchematicInteractiveOverlay } from './components/documents/SchematicInteractiveOverlay';
 
 const AppContent: React.FC = () => {
   const [currentRoute, setCurrentRoute] = useState<string>(window.location.hash || '#/');
@@ -61,6 +68,13 @@ const AppContent: React.FC = () => {
   const isOperationalDashboardRoute =
     currentRoute.startsWith('#/didban') ||
     currentRoute.startsWith('#/twin') ||
+    currentRoute.startsWith('#/realtime') ||
+    currentRoute.startsWith('#/maintenance') ||
+    currentRoute.startsWith('#/annotations') ||
+    currentRoute.startsWith('#/knowledge-graph') ||
+    currentRoute.startsWith('#/doc-comparison') ||
+    currentRoute.startsWith('#/offline-docs') ||
+    currentRoute.startsWith('#/schematic-overlay') ||
     currentRoute.startsWith('#/pasdar') ||
     currentRoute.startsWith('#/nazmgar') ||
     currentRoute.startsWith('#/hafeze') ||
@@ -80,6 +94,27 @@ const AppContent: React.FC = () => {
     }
     if (currentRoute.startsWith('#/twin')) {
       return <DigitalTwinPage />;
+    }
+    if (currentRoute.startsWith('#/realtime')) {
+      return <RealTimeDashboard onNavigateTo3D={() => { window.location.hash = '#/twin'; }} />;
+    }
+    if (currentRoute.startsWith('#/maintenance')) {
+      return <MaintenanceLog />;
+    }
+    if (currentRoute.startsWith('#/annotations')) {
+      return <TechnicalDiagramAnnotation />;
+    }
+    if (currentRoute.startsWith('#/knowledge-graph')) {
+      return <DocumentKnowledgeGraph />;
+    }
+    if (currentRoute.startsWith('#/doc-comparison')) {
+      return <DocumentComparison />;
+    }
+    if (currentRoute.startsWith('#/offline-docs')) {
+      return <OfflineDocsManager />;
+    }
+    if (currentRoute.startsWith('#/schematic-overlay')) {
+      return <SchematicInteractiveOverlay />;
     }
     if (currentRoute.startsWith('#/didban')) {
       return <DidbanDashboard />;

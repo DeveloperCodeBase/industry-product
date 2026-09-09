@@ -131,6 +131,33 @@ export const TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     sim_reset: 'بازنشانی',
     sim_speed: 'سرعت',
     sim_scenario: 'سناریوی خرابی',
+
+    // Search & Command Palette
+    search_placeholder: 'جستجوی تجهیزات، داشبوردها و شواهد حقیقت...',
+    search_shortcut: 'Ctrl+K',
+    search_all: 'همه موارد',
+    search_assets: 'تجهیزات صنعتی',
+    search_dashboards: 'داشبوردها و محصولات',
+    search_chapters: 'فصول سند مرجع و غول‌های فناوری',
+    search_truth_blocks: 'شواهد و بلوک‌های حقیقت',
+    search_no_results: 'هیچ موردی مطابق با جستجوی شما یافت نشد.',
+    search_navigate: 'برای پیمایش ↑↓ و برای انتخاب Enter را بزنید',
+    search_esc: 'خروج با ESC',
+
+    // Notifications Center
+    notif_title: 'مرکز اعلانات صنعتی و هشدارهای امنیتی',
+    notif_all: 'همه اعلانات',
+    notif_system: 'هشدارهای سیستم',
+    notif_maintenance: 'برنامه تعمیرات',
+    notif_security: 'امنیت و ممیزی',
+    notif_mark_all_read: 'خوانده‌شدن همه',
+    notif_clear: 'پاک‌سازی خوانده‌شده‌ها',
+    notif_empty: 'هیچ اعلان جدیدی در این دسته‌بندی وجود ندارد.',
+    notif_unread_badge: 'اعلان خوانده‌نشده',
+    notif_critical: 'بحرانی',
+    notif_warning: 'هشدار',
+    notif_info: 'اطلاعیه',
+    notif_success: 'تأییدشده',
   },
 
   en: {
@@ -245,6 +272,33 @@ export const TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     sim_reset: 'Reset',
     sim_speed: 'Speed',
     sim_scenario: 'Fault Scenario',
+
+    // Search & Command Palette
+    search_placeholder: 'Search assets, dashboards, truth blocks...',
+    search_shortcut: 'Ctrl+K',
+    search_all: 'All Results',
+    search_assets: 'Industrial Assets',
+    search_dashboards: 'Dashboards & Triad',
+    search_chapters: 'Architecture & Tech Giants',
+    search_truth_blocks: 'Truth Blocks & Evidence',
+    search_no_results: 'No matching results found.',
+    search_navigate: 'Use ↑↓ to navigate, Enter to select',
+    search_esc: 'ESC to close',
+
+    // Notifications Center
+    notif_title: 'Industrial Notification Center & Security Alerts',
+    notif_all: 'All Alerts',
+    notif_system: 'System Alerts',
+    notif_maintenance: 'Maintenance',
+    notif_security: 'Security & Audit',
+    notif_mark_all_read: 'Mark all as read',
+    notif_clear: 'Clear read',
+    notif_empty: 'No notifications in this category.',
+    notif_unread_badge: 'unread alerts',
+    notif_critical: 'Critical',
+    notif_warning: 'Warning',
+    notif_info: 'Info',
+    notif_success: 'Verified',
   },
 
   ar: {
@@ -359,6 +413,33 @@ export const TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     sim_reset: 'إعادة ضبط',
     sim_speed: 'السرعة',
     sim_scenario: 'سيناريو العطل',
+
+    // Search & Command Palette
+    search_placeholder: 'البحث عن الأصول ولوحات التحكم وكتل الحقيقة...',
+    search_shortcut: 'Ctrl+K',
+    search_all: 'جميع النتائج',
+    search_assets: 'المعدات الصناعية',
+    search_dashboards: 'لوحات التحكم وثلاثي القرار',
+    search_chapters: 'معمارية الوثيقة وعمالقة التقنية',
+    search_truth_blocks: 'كتل الحقيقة والأدلة',
+    search_no_results: 'لم يتم العثور على نتائج مطابقة لبحثك.',
+    search_navigate: 'استخدم ↑↓ للتنقل و Enter للاختيار',
+    search_esc: 'ESC للإغلاق',
+
+    // Notifications Center
+    notif_title: 'مركز الإشعارات والتنبيهات الأمنية الصناعية',
+    notif_all: 'جميع الإشعارات',
+    notif_system: 'تنبيهات النظام',
+    notif_maintenance: 'جداول الصيانة',
+    notif_security: 'الأمان والتدقيق',
+    notif_mark_all_read: 'تحديد الكل كمقروء',
+    notif_clear: 'مسح المقروء',
+    notif_empty: 'لا توجد إشعارات جديدة في هذه الفئة.',
+    notif_unread_badge: 'إشعار غير مقروء',
+    notif_critical: 'حرج',
+    notif_warning: 'تحذير',
+    notif_info: 'معلومة',
+    notif_success: 'تم التحقق',
   },
 
   tr: {
@@ -473,5 +554,32 @@ export const TRANSLATIONS: Record<SupportedLanguage, Record<string, string>> = {
     sim_reset: 'Sıfırla',
     sim_speed: 'Hız',
     sim_scenario: 'Arıza Senaryosu',
+
+    // Search & Command Palette
+    search_placeholder: 'Varlıkları, panelleri ve gerçeklik bloklarını ara...',
+    search_shortcut: 'Ctrl+K',
+    search_all: 'Tüm Sonuçlar',
+    search_assets: 'Endüstriyel Varlıklar',
+    search_dashboards: 'Kontrol Panelleri & Üçlü',
+    search_chapters: 'Mimari Belge & Teknoloji Devleri',
+    search_truth_blocks: 'Gerçeklik Blokları & Kanıtlar',
+    search_no_results: 'Aramanıza uygun sonuç bulunamadı.',
+    search_navigate: 'Gezinmek için ↑↓, seçmek için Enter',
+    search_esc: 'Kapatmak için ESC',
+
+    // Notifications Center
+    notif_title: 'Endüstriyel Bildirim Merkezi ve Güvenlik Uyarıları',
+    notif_all: 'Tüm Bildirimler',
+    notif_system: 'Sistem Uyarıları',
+    notif_maintenance: 'Bakım Takvimi',
+    notif_security: 'Güvenlik ve Denetim',
+    notif_mark_all_read: 'Tümünü okundu işaretle',
+    notif_clear: 'Okunanları temizle',
+    notif_empty: 'Bu kategoride yeni bildirim bulunmamaktadır.',
+    notif_unread_badge: 'okunmamış bildirim',
+    notif_critical: 'Kritik',
+    notif_warning: 'Uyarı',
+    notif_info: 'Bilgi',
+    notif_success: 'Doğrulandı',
   },
 };

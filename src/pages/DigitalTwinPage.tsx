@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Boxes,
   Waves,
@@ -8,10 +8,14 @@ import {
   Sparkles,
   ShieldCheck,
   ChevronLeft,
-  AlertTriangle
+  AlertTriangle,
+  Layers,
+  Gauge,
+  LineChart
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { DigitalTwinEngine } from '../components/twin/DigitalTwinEngine';
+import { RealTimeDashboard } from '../components/dashboard/RealTimeDashboard';
 import { TwinMaturityMode } from '../types';
 
 export const DigitalTwinPage: React.FC = () => {
@@ -24,6 +28,8 @@ export const DigitalTwinPage: React.FC = () => {
     activeScenario,
     setScenario
   } = useApp();
+
+  const [viewMode, setViewMode] = useState<'both' | '3d' | 'telemetry'>('both');
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12">
@@ -69,15 +75,80 @@ export const DigitalTwinPage: React.FC = () => {
         </div>
       </div>
 
+      {/* View Mode Mode Toggles: 3D Twin vs Recharts Telemetry vs Both */}
+      <div className="flex items-center justify-between gap-3 bg-slate-900/90 border border-slate-800 p-2.5 rounded-2xl">
+        <div className="flex items-center gap-1.5 overflow-x-auto">
+          <button
+            onClick={() => setViewMode('both')}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+              viewMode === 'both'
+                ? 'bg-sky-600 text-white shadow-md shadow-sky-600/30'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+            }`}
+          >
+            <Layers size={14} />
+            <span>نمای ترکیبی (مدل ۳D + تله‌متری بلادرنگ)</span>
+          </button>
+          <button
+            onClick={() => setViewMode('3d')}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+              viewMode === '3d'
+                ? 'bg-sky-600 text-white shadow-md shadow-sky-600/30'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+            }`}
+          >
+            <Boxes size={14} />
+            <span>فقط موتور سه‌بعدی Three.js</span>
+          </button>
+          <button
+            onClick={() => setViewMode('telemetry')}
+            className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-2 ${
+              viewMode === 'telemetry'
+                ? 'bg-sky-600 text-white shadow-md shadow-sky-600/30'
+                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+            }`}
+          >
+            <LineChart size={14} />
+            <span>فقط داشبورد بلادرنگ Recharts</span>
+          </button>
+        </div>
+
+        <div className="hidden md:flex items-center gap-2 text-xs text-slate-400 font-mono">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>پایش همگام دوقلو و تله‌متری</span>
+        </div>
+      </div>
+
       {/* Main 3D Interactive Twin Engine */}
-      <DigitalTwinEngine
-        asset={selectedAsset}
-        assets={assets}
-        onSelectAsset={setSelectedAssetId}
-        maturityMode={twinMaturity}
-        onChangeMaturityMode={setTwinMaturity}
-        showControls={true}
-      />
+      {(viewMode === 'both' || viewMode === '3d') && (
+        <DigitalTwinEngine
+          asset={selectedAsset}
+          assets={assets}
+          onSelectAsset={setSelectedAssetId}
+          maturityMode={twinMaturity}
+          onChangeMaturityMode={setTwinMaturity}
+          showControls={true}
+        />
+      )}
+
+      {/* Real-time Telemetry Sensor Recharts Dashboard */}
+      {(viewMode === 'both' || viewMode === 'telemetry') && (
+        <div className="space-y-3 pt-2">
+          {viewMode === 'both' && (
+            <div className="flex items-center justify-between px-1">
+              <div className="flex items-center gap-2 text-sm font-bold text-white">
+                <Gauge size={18} className="text-sky-400" />
+                <span>داشبورد گرافیکی تله‌متری و تحلیل بلادرنگ (Recharts Telemetry)</span>
+              </div>
+              <span className="text-xs text-slate-500 font-mono">تجهیز جاری: {selectedAsset.faName}</span>
+            </div>
+          )}
+          <RealTimeDashboard
+            initialAssetId={selectedAsset.id}
+            show3DSwitchButton={false}
+          />
+        </div>
+      )}
 
       {/* Quick Asset Selector Strip */}
       <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-3 shadow-xl">

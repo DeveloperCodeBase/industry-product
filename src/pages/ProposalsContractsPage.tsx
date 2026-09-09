@@ -11,12 +11,18 @@ import {
   Lock,
   DollarSign,
   Layers,
-  FileCheck
+  FileCheck,
+  Sparkles
 } from 'lucide-react';
+import { DocumentInsightModal } from '../components/documents/DocumentInsightModal';
+import { DocumentAutoTaggerModal } from '../components/documents/DocumentAutoTaggerModal';
+import { GitFork, GitCompare, DownloadCloud, Tag } from 'lucide-react';
 
 export const ProposalsContractsPage: React.FC = () => {
   const [activeDocTab, setActiveDocTab] = useState<'proposal' | 'contract' | 'mou'>('proposal');
   const [copied, setCopied] = useState(false);
+  const [insightModalOpen, setInsightModalOpen] = useState(false);
+  const [autoTaggerOpen, setAutoTaggerOpen] = useState(false);
 
   const handlePrint = () => {
     window.print();
@@ -47,7 +53,23 @@ export const ProposalsContractsPage: React.FC = () => {
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex flex-wrap items-center gap-2">
+          <button
+            onClick={() => setAutoTaggerOpen(true)}
+            className="px-3.5 py-2 rounded-xl bg-sky-600/20 hover:bg-sky-600/30 text-sky-300 border border-sky-500/40 text-xs font-bold flex items-center gap-1.5 transition-all shadow-lg shadow-sky-950/40"
+            title="برچسب‌گذاری و استخراج خودکار کد تجهیزات، استانداردها و تگ‌ها با AI"
+          >
+            <Tag size={14} className="text-sky-400" />
+            <span>برچسب‌گذاری هوشمند با AI (Auto-Tag)</span>
+          </button>
+          <button
+            onClick={() => setInsightModalOpen(true)}
+            className="px-3.5 py-2 rounded-xl bg-purple-600/20 hover:bg-purple-600/30 text-purple-300 border border-purple-500/40 text-xs font-bold flex items-center gap-1.5 transition-all shadow-lg shadow-purple-950/40"
+            title="تحلیل هوشمند مفاد قرارداد با مدل زبانی هوش مصنوعی جمینای"
+          >
+            <Sparkles size={14} className="text-purple-400" />
+            <span>تحلیل هوشمند مفاد با هوش مصنوعی (Gemini)</span>
+          </button>
           <button
             onClick={handleCopy}
             className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-colors"
@@ -63,6 +85,60 @@ export const ProposalsContractsPage: React.FC = () => {
             <span>چاپ رسمی / ذخیره PDF</span>
           </button>
         </div>
+      </div>
+
+      {/* Quick Tools Navigation Bar */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+        <a
+          href="#/knowledge-graph"
+          className="p-3.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-sky-500/50 transition-all flex items-center gap-3 group shadow-md"
+        >
+          <div className="w-9 h-9 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <GitFork size={18} />
+          </div>
+          <div className="min-w-0">
+            <div className="text-xs font-bold text-white group-hover:text-sky-300 transition-colors">
+              گراف دانش اسناد و دارایی‌ها (D3.js)
+            </div>
+            <div className="text-[11px] text-slate-400 truncate">
+              مشاهده اتصالات قراردادها، استانداردها و تجهیزات در شبیه‌ساز نیرو
+            </div>
+          </div>
+        </a>
+
+        <a
+          href="#/doc-comparison"
+          className="p-3.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-purple-500/50 transition-all flex items-center gap-3 group shadow-md"
+        >
+          <div className="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/30 text-purple-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <GitCompare size={18} />
+          </div>
+          <div className="min-w-0">
+            <div className="text-xs font-bold text-white group-hover:text-purple-300 transition-colors">
+              مقایسه‌گر ویرایش‌های اسناد (Diff)
+            </div>
+            <div className="text-[11px] text-slate-400 truncate">
+              تحلیل تغییرات بندهای قراردادها و گزارش‌ها با هایلایت رنگی
+            </div>
+          </div>
+        </a>
+
+        <a
+          href="#/offline-docs"
+          className="p-3.5 rounded-2xl bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-emerald-500/50 transition-all flex items-center gap-3 group shadow-md"
+        >
+          <div className="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+            <DownloadCloud size={18} />
+          </div>
+          <div className="min-w-0">
+            <div className="text-xs font-bold text-white group-hover:text-emerald-300 transition-colors">
+              مرکز اسناد آفلاین میدانی (PWA)
+            </div>
+            <div className="text-[11px] text-slate-400 truncate">
+              دسترسی بدون اینترنت به دفترچه‌های راهنما با Service Worker
+            </div>
+          </div>
+        </a>
       </div>
 
       {/* Document Selector Tabs */}
@@ -299,6 +375,18 @@ export const ProposalsContractsPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* AI Document Insight Modal */}
+      <DocumentInsightModal
+        isOpen={insightModalOpen}
+        onClose={() => setInsightModalOpen(false)}
+      />
+
+      {/* AI Auto-Tagging Modal */}
+      <DocumentAutoTaggerModal
+        isOpen={autoTaggerOpen}
+        onClose={() => setAutoTaggerOpen(false)}
+      />
     </div>
   );
 };
